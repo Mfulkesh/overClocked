@@ -1,26 +1,31 @@
-import express from "express"
-import { prisma } from "./db";
+import express from "express";
+import { authRouter } from "./routes/auth.js";
+import { orgsRouter } from "./routes/orgs.js";
+import { campaignsRouter } from "./routes/campaigns.js";
+import { donationsRouter } from "./routes/donations.js";
+import { webhookRouter } from "./routes/webhook.js";
 
 const app = express();
-app.use(express.json());
 
-app.post("/user", async (req, res) => {
-    try {
-        const {email, password} = req.body;
-        const user = await prisma.user.create({
-            data: {
-                email,
-                password
-            }
-        })
-        console.log(user);
-        return res.status(201).json(user);
-    }catch (e) {
-        console.log(e);
-        return res.status(500).json({message: "something went wrong"})
-    }
-})
+// Razorpay signature verification needs the exact raw request body.
+app.use("/api/donations/upi-webhook", express.raw({ type: "application/json" }));
+app.use(express.json({ limit: "5mb" }));
 
-app.listen(8080, () => {
-    console.log("api is running on the post 8080")
-})
+app.get("/health", (_req, res) => {
+    res.json({ ok: true });
+});
+
+app.use("/api/auth", authRouter);
+app.use("/api/orgs", orgsRouter);
+app.use("/api/campaigns", campaignsRouter);
+app.use("/api/donations", donationsRouter);
+app.use("/api/webhook", webhookRouter);
+
+app.use((req, res) => {
+    res.status(404).json({ error: `Route not found: ${req.method} ${req.path}` });
+});
+
+const PORT = Number(process.env.PORT ?? 8080);
+app.listen(PORT, () => {
+    console.log(`API is running on port ${PORT}`);
+});

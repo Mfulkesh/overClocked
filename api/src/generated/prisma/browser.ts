@@ -22,3 +22,28 @@ export * from './enums.ts';
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Org
+ * 
+ */
+export type Org = Prisma.OrgModel
+/**
+ * Model Campaign
+ * 
+ */
+export type Campaign = Prisma.CampaignModel
+/**
+ * Model Milestone
+ * 
+ */
+export type Milestone = Prisma.MilestoneModel
+/**
+ * Model Donation
+ * 
+ */
+export type Donation = Prisma.DonationModel
+/**
+ * Model YieldAccrual
+ * 
+ */
+export type YieldAccrual = Prisma.YieldAccrualModel

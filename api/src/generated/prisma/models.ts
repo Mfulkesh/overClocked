@@ -9,4 +9,9 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.ts'
+export type * from './models/Org.ts'
+export type * from './models/Campaign.ts'
+export type * from './models/Milestone.ts'
+export type * from './models/Donation.ts'
+export type * from './models/YieldAccrual.ts'
 export type * from './commonInputTypes.ts'

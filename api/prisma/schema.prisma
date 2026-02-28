@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -13,11 +10,188 @@ datasource db {
   provider = "postgresql"
 }
 
+// ── User (Privy-linked) ─────────────────────────────────────────────────────
+model User {
+  id            String   @id @default(uuid())
+  privyId       String   @unique @default("")// Privy DID
+  walletAddress String?  @unique // Embedded or external wallet
+  email         String?  @unique
+  twitterHandle String?
+  createdAt     DateTime @default(now())
 
-model User { 
-  id        String     @id @default(uuid()) 
-  email     String  @unique
-  password  String
-  name      String?
+  org       Org?
+  donations Donation[]
+}
 
-} 
+// ── Organisation ────────────────────────────────────────────────────────────
+// Covers: student orgs, NGOs, DAOs, community groups, charities
+model Org {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  name          String
+  description   String?
+  category      OrgCategory @default(OTHER)
+  websiteUrl    String?
+  twitterHandle String?
+  logoUrl       String? // S3 key
+
+  // Verification docs (S3 keys)
+  docUrls String[]
+
+  // On-chain PDA address for this org
+  onchainPda String? @unique
+
+  // Reputation (mirrored from on-chain; updated by Helius webhook)
+  campaignsCreated    Int    @default(0)
+  campaignsCompleted  Int    @default(0)
+  campaignsFailed     Int    @default(0)
+  totalRaisedLamports BigInt @default(0)
+  completionRateBps   Int    @default(0)
+
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  campaigns Campaign[]
+}
+
+enum OrgCategory {
+  STUDENT_ORG
+  NGO
+  DAO
+  COMMUNITY
+  CHARITY
+  OPEN_SOURCE
+  OTHER
+}
+
+// ── Campaign ────────────────────────────────────────────────────────────────
+model Campaign {
+  id    String @id @default(uuid())
+  orgId String
+  org   Org    @relation(fields: [orgId], references: [id])
+
+  title       String
+  description String
+  category    String?
+  bannerUrl   String? // S3 key
+  tags        String[]
+
+  // On-chain references
+  onchainProjectPda String? @unique
+  onchainVaultPda   String? @unique
+  projectIdBytes    String? // hex of the 32-byte project_id seed
+
+  // Goal & state (mirrored from chain)
+  hasGoal           Boolean       @default(true)
+  totalGoalLamports BigInt        @default(0)
+  raisedLamports    BigInt        @default(0)
+  state             CampaignState @default(ACTIVE)
+
+  // Prefront config
+  prefrontLamports BigInt @default(0)
+  prefrontTranches Int    @default(0)
+  prefrontClaimed  Int    @default(0)
+
+  // Yield policy (0=None, 1=Low5, 2=Mid8, 3=High12)
+  yieldPolicy Int @default(0)
+
+  deadline  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  milestones    Milestone[]
+  donations     Donation[]
+  yieldAccruals YieldAccrual[]
+}
+
+enum CampaignState {
+  ACTIVE
+  COMPLETED
+  FAILED
+  FROZEN
+}
+
+// ── Milestone ───────────────────────────────────────────────────────────────
+model Milestone {
+  id         String   @id @default(uuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+
+  index       Int // 0-based, matches on-chain index
+  title       String
+  description String?
+
+  // Release config
+  amountLamports BigInt @default(0)
+  releasePctBps  Int    @default(0)
+
+  // Proof
+  proofUri  String? // on-chain URI (S3 key) set after submission
+  proofNote String? // creator's explanation
+
+  // Voting config
+  thresholdBps     Int @default(5100)
+  quorumBps        Int @default(1000)
+  // Voting window is set by creator at proof submission time (min 24h enforced by API)
+  votingWindowSecs Int @default(172800) // 48h default
+
+  deadline      DateTime?
+  state         MilestoneState @default(PENDING)
+  revisionCount Int            @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MilestoneState {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}
+
+// ── Donation ────────────────────────────────────────────────────────────────
+model Donation {
+  id         String   @id @default(uuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+
+  // For anonymous donations (wallet-only, no User record)
+  donorWallet String?
+
+  amountLamports BigInt
+  amountInr      Int? // Set for UPI donations
+  paymentType    PaymentType @default(SOL)
+
+  // UPI flow
+  razorpayOrderId   String? @unique
+  razorpayPaymentId String? @unique
+
+  // On-chain
+  txSignature String? @unique
+  confirmed   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+}
+
+enum PaymentType {
+  SOL
+  UPI
+}
+
+// ── Yield Accrual (mock) ────────────────────────────────────────────────────
+model YieldAccrual {
+  id         String   @id @default(uuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+
+  yieldLamports BigInt // amount accrued this period
+  periodDate    DateTime // which day this represents
+  yieldRateBps  Int // rate used (500, 800, or 1200)
+
+  createdAt DateTime @default(now())
+}

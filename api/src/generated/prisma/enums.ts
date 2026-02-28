@@ -9,7 +9,42 @@
 * 🟢 You can import this file directly.
 */
 
+export const OrgCategory = {
+  STUDENT_ORG: 'STUDENT_ORG',
+  NGO: 'NGO',
+  DAO: 'DAO',
+  COMMUNITY: 'COMMUNITY',
+  CHARITY: 'CHARITY',
+  OPEN_SOURCE: 'OPEN_SOURCE',
+  OTHER: 'OTHER'
+} as const
+
+export type OrgCategory = (typeof OrgCategory)[keyof typeof OrgCategory]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const CampaignState = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  FROZEN: 'FROZEN'
+} as const
+
+export type CampaignState = (typeof CampaignState)[keyof typeof CampaignState]
+
+
+export const MilestoneState = {
+  PENDING: 'PENDING',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type MilestoneState = (typeof MilestoneState)[keyof typeof MilestoneState]
+
+
+export const PaymentType = {
+  SOL: 'SOL',
+  UPI: 'UPI'
+} as const
+
+export type PaymentType = (typeof PaymentType)[keyof typeof PaymentType]

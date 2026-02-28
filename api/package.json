@@ -4,8 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch src/index.ts",
-    "start": "bun src/index.ts",
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
     "build": "bun build src/index.ts --outdir dist --target bun",
     "typecheck": "tsc --noEmit",
     "db:generate": "bunx prisma generate",
@@ -14,18 +14,27 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/pg": "^8.16.0",
+    "@types/cors": "^2.8.19",
+    "@types/node-cron": "^3.0.11",
     "prisma": "^7.4.2"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.744.0",
+    "@aws-sdk/s3-request-presigner": "^3.744.0",
+    "@coral-xyz/anchor": "^0.32.1",
     "@prisma/adapter-libsql": "^7.4.2",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
+    "@solana/web3.js": "^1.98.0",
     "@types/express": "^5.0.6",
+    "bs58": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.7",
     "express": "^5.2.1",
-    "pg": "^8.19.0"
+    "node-cron": "^3.0.3",
+    "razorpay": "^2.9.6"
   }
 }

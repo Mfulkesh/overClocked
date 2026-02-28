@@ -51,7 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Org: 'Org',
+  Campaign: 'Campaign',
+  Milestone: 'Milestone',
+  Donation: 'Donation',
+  YieldAccrual: 'YieldAccrual'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -72,12 +77,117 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
+  privyId: 'privyId',
+  walletAddress: 'walletAddress',
   email: 'email',
-  password: 'password',
-  name: 'name'
+  twitterHandle: 'twitterHandle',
+  createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const OrgScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  websiteUrl: 'websiteUrl',
+  twitterHandle: 'twitterHandle',
+  logoUrl: 'logoUrl',
+  docUrls: 'docUrls',
+  onchainPda: 'onchainPda',
+  campaignsCreated: 'campaignsCreated',
+  campaignsCompleted: 'campaignsCompleted',
+  campaignsFailed: 'campaignsFailed',
+  totalRaisedLamports: 'totalRaisedLamports',
+  completionRateBps: 'completionRateBps',
+  verified: 'verified',
+  createdAt: 'createdAt'
+} as const
+
+export type OrgScalarFieldEnum = (typeof OrgScalarFieldEnum)[keyof typeof OrgScalarFieldEnum]
+
+
+export const CampaignScalarFieldEnum = {
+  id: 'id',
+  orgId: 'orgId',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  bannerUrl: 'bannerUrl',
+  tags: 'tags',
+  onchainProjectPda: 'onchainProjectPda',
+  onchainVaultPda: 'onchainVaultPda',
+  projectIdBytes: 'projectIdBytes',
+  hasGoal: 'hasGoal',
+  totalGoalLamports: 'totalGoalLamports',
+  raisedLamports: 'raisedLamports',
+  state: 'state',
+  prefrontLamports: 'prefrontLamports',
+  prefrontTranches: 'prefrontTranches',
+  prefrontClaimed: 'prefrontClaimed',
+  yieldPolicy: 'yieldPolicy',
+  deadline: 'deadline',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum]
+
+
+export const MilestoneScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  index: 'index',
+  title: 'title',
+  description: 'description',
+  amountLamports: 'amountLamports',
+  releasePctBps: 'releasePctBps',
+  proofUri: 'proofUri',
+  proofNote: 'proofNote',
+  thresholdBps: 'thresholdBps',
+  quorumBps: 'quorumBps',
+  votingWindowSecs: 'votingWindowSecs',
+  deadline: 'deadline',
+  state: 'state',
+  revisionCount: 'revisionCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MilestoneScalarFieldEnum = (typeof MilestoneScalarFieldEnum)[keyof typeof MilestoneScalarFieldEnum]
+
+
+export const DonationScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  userId: 'userId',
+  donorWallet: 'donorWallet',
+  amountLamports: 'amountLamports',
+  amountInr: 'amountInr',
+  paymentType: 'paymentType',
+  razorpayOrderId: 'razorpayOrderId',
+  razorpayPaymentId: 'razorpayPaymentId',
+  txSignature: 'txSignature',
+  confirmed: 'confirmed',
+  createdAt: 'createdAt'
+} as const
+
+export type DonationScalarFieldEnum = (typeof DonationScalarFieldEnum)[keyof typeof DonationScalarFieldEnum]
+
+
+export const YieldAccrualScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  yieldLamports: 'yieldLamports',
+  periodDate: 'periodDate',
+  yieldRateBps: 'yieldRateBps',
+  createdAt: 'createdAt'
+} as const
+
+export type YieldAccrualScalarFieldEnum = (typeof YieldAccrualScalarFieldEnum)[keyof typeof YieldAccrualScalarFieldEnum]
 
 
 export const SortOrder = {
