@@ -51,7 +51,11 @@ campaignsRouter.post("/", requireAuth, async (req: AuthedRequest, res) => {
                         releasePctBps: m.releasePctBps ?? 0,
                         thresholdBps: m.thresholdBps ?? 5100,
                         quorumBps: m.quorumBps ?? 1000,
-                        votingWindowSecs: Math.max(m.votingWindowSecs ?? 172800, 86400), // min 24h
+                        dprPhaseLabel: m.dprPhaseLabel,
+                        votingWindowSecs: Math.min(
+                            Math.max(Number(m.votingWindowSecs ?? 172800), 172800), // min 48h
+                            604800 // max 7d
+                        ),
                         deadline: m.deadline ? new Date(m.deadline) : undefined,
                     })),
                 },
@@ -187,7 +191,7 @@ campaignsRouter.post("/:id/upload-banner", requireAuth, async (req: AuthedReques
         const { uploadUrl, publicUrl } = await getPresignedUploadUrl(key, contentType);
 
         await prisma.campaign.update({
-            where: { id: req.params.id as string},
+            where: { id: req.params.id as string },
             data: { bannerUrl: publicUrl },
         });
 

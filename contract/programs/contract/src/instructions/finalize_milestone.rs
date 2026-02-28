@@ -59,19 +59,30 @@ pub fn handler(ctx: Context<FinalizeMilestone>, milestone_index: u8) -> Result<(
             m.state == MilestoneState::UnderReview,
             CredenceError::MilestoneNotUnderReview
         );
-        require!(now > m.voting_end, CredenceError::VotingWindowNotExpired);
     }
 
     let project_key = ctx.accounts.project.key();
     let vault_bump = ctx.accounts.project.vault_bump;
 
     // Tally
-    let (vote_yes, vote_no, total_eligible, threshold_bps, quorum_bps, amount, release_pct_bps) = {
+    let (vote_yes, vote_no, total_eligible, threshold_bps, quorum_bps, amount, release_pct_bps, voting_end) = {
         let m = &ctx.accounts.project.milestones[milestone_index as usize];
-        (m.vote_yes, m.vote_no, m.total_eligible, m.threshold_bps, m.quorum_bps, m.amount, m.release_pct_bps)
+        (
+            m.vote_yes,
+            m.vote_no,
+            m.total_eligible,
+            m.threshold_bps,
+            m.quorum_bps,
+            m.amount,
+            m.release_pct_bps,
+            m.voting_end,
+        )
     };
 
     let total_votes = vote_yes.saturating_add(vote_no);
+    let window_expired = now > voting_end;
+    let all_votes_in = total_eligible > 0 && total_votes >= total_eligible;
+    require!(window_expired || all_votes_in, CredenceError::VotingWindowNotExpired);
 
     // Check quorum: (total_votes / total_eligible) >= quorum_bps / 10000
     let quorum_met = if total_eligible == 0 {

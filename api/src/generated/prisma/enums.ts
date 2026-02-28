@@ -32,6 +32,17 @@ export const CampaignState = {
 export type CampaignState = (typeof CampaignState)[keyof typeof CampaignState]
 
 
+export const MilestoneUpdateType = {
+  PROGRESS: 'PROGRESS',
+  EXPENSE: 'EXPENSE',
+  PHOTO: 'PHOTO',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  COMPLETION: 'COMPLETION'
+} as const
+
+export type MilestoneUpdateType = (typeof MilestoneUpdateType)[keyof typeof MilestoneUpdateType]
+
+
 export const MilestoneState = {
   PENDING: 'PENDING',
   UNDER_REVIEW: 'UNDER_REVIEW',

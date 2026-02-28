@@ -26,8 +26,8 @@ pub mod contract {
     }
 
     // ── Org ───────────────────────────────────────────────────────────────────
-    pub fn create_org(ctx: Context<CreateOrg>) -> Result<()> {
-        create_org::handler(ctx)
+    pub fn create_org(ctx: Context<CreateOrg>, gstin_hash: [u8; 32]) -> Result<()> {
+        create_org::handler(ctx, gstin_hash)
     }
 
     // ── Campaign ──────────────────────────────────────────────────────────────
@@ -47,9 +47,18 @@ pub mod contract {
         ctx: Context<SubmitMilestoneProof>,
         milestone_index: u8,
         proof_uri: String,
+        invoice_hash: [u8; 32],
+        vendor_gstin_hash: [u8; 32],
         voting_window_secs: i64,
     ) -> Result<()> {
-        submit_milestone_proof::handler(ctx, milestone_index, proof_uri, voting_window_secs)
+        submit_milestone_proof::handler(
+            ctx,
+            milestone_index,
+            proof_uri,
+            invoice_hash,
+            vendor_gstin_hash,
+            voting_window_secs,
+        )
     }
 
     pub fn vote_milestone(

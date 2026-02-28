@@ -38,6 +38,16 @@ export type Campaign = Prisma.CampaignModel
  */
 export type Milestone = Prisma.MilestoneModel
 /**
+ * Model MilestoneProof
+ * 
+ */
+export type MilestoneProof = Prisma.MilestoneProofModel
+/**
+ * Model MilestoneUpdate
+ * 
+ */
+export type MilestoneUpdate = Prisma.MilestoneUpdateModel
+/**
  * Model Donation
  * 
  */

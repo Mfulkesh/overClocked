@@ -109,6 +109,7 @@ pub fn handler(ctx: Context<CreateProject>, params: CreateProjectParams) -> Resu
             deadline: input.deadline,
             state: MilestoneState::Pending,
             proof_uri: String::new(),
+            invoice_hash: [0u8; 32],
             vote_yes: 0,
             vote_no: 0,
             total_eligible: 0,

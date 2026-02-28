@@ -31,8 +31,11 @@ pub struct MilestoneData {
     pub release_pct_bps: u16,
     pub deadline: i64,
     pub state: MilestoneState,
-    /// S3 / IPFS URI of proof. Max MAX_PROOF_URI_LEN chars.
+    /// S3 / IPFS URI of proof metadata JSON. Max MAX_PROOF_URI_LEN chars.
     pub proof_uri: String,
+    /// SHA-256 hash of the GST invoice PDF — forms the Proof-of-History chain.
+    /// [0u8; 32] means no proof submitted yet.
+    pub invoice_hash: [u8; 32],
     /// Sum of lamport weights voting yes
     pub vote_yes: u64,
     /// Sum of lamport weights voting no
@@ -57,6 +60,7 @@ impl Default for MilestoneData {
             deadline: i64::MAX,
             state: MilestoneState::Pending,
             proof_uri: String::new(),
+            invoice_hash: [0u8; 32],
             vote_yes: 0,
             vote_no: 0,
             total_eligible: 0,
@@ -78,6 +82,7 @@ impl MilestoneData {
         + 8 // deadline i64
         + 1 // state (enum → u8)
         + (4 + MAX_PROOF_URI_LEN) // proof_uri String
+        + 32 // invoice_hash [u8; 32]
         + 8 // vote_yes u64
         + 8 // vote_no u64
         + 8 // total_eligible u64
@@ -86,7 +91,7 @@ impl MilestoneData {
         + 8 // voting_start i64
         + 8 // voting_end i64
         + 1; // revision_count u8
-    // Total: 268 bytes per milestone
+    // Total: 300 bytes per milestone
 }
 
 // ─── Project ─────────────────────────────────────────────────────────────────

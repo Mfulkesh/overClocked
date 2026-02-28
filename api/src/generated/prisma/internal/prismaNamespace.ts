@@ -388,6 +388,8 @@ export const ModelName = {
   Org: 'Org',
   Campaign: 'Campaign',
   Milestone: 'Milestone',
+  MilestoneProof: 'MilestoneProof',
+  MilestoneUpdate: 'MilestoneUpdate',
   Donation: 'Donation',
   YieldAccrual: 'YieldAccrual'
 } as const
@@ -405,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "org" | "campaign" | "milestone" | "donation" | "yieldAccrual"
+    modelProps: "user" | "org" | "campaign" | "milestone" | "milestoneProof" | "milestoneUpdate" | "donation" | "yieldAccrual"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -705,6 +707,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MilestoneProof: {
+      payload: Prisma.$MilestoneProofPayload<ExtArgs>
+      fields: Prisma.MilestoneProofFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MilestoneProofFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MilestoneProofFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>
+        }
+        findFirst: {
+          args: Prisma.MilestoneProofFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MilestoneProofFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>
+        }
+        findMany: {
+          args: Prisma.MilestoneProofFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>[]
+        }
+        create: {
+          args: Prisma.MilestoneProofCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>
+        }
+        createMany: {
+          args: Prisma.MilestoneProofCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MilestoneProofCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>[]
+        }
+        delete: {
+          args: Prisma.MilestoneProofDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>
+        }
+        update: {
+          args: Prisma.MilestoneProofUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>
+        }
+        deleteMany: {
+          args: Prisma.MilestoneProofDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MilestoneProofUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MilestoneProofUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>[]
+        }
+        upsert: {
+          args: Prisma.MilestoneProofUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneProofPayload>
+        }
+        aggregate: {
+          args: Prisma.MilestoneProofAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMilestoneProof>
+        }
+        groupBy: {
+          args: Prisma.MilestoneProofGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MilestoneProofGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MilestoneProofCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MilestoneProofCountAggregateOutputType> | number
+        }
+      }
+    }
+    MilestoneUpdate: {
+      payload: Prisma.$MilestoneUpdatePayload<ExtArgs>
+      fields: Prisma.MilestoneUpdateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MilestoneUpdateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MilestoneUpdateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>
+        }
+        findFirst: {
+          args: Prisma.MilestoneUpdateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MilestoneUpdateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>
+        }
+        findMany: {
+          args: Prisma.MilestoneUpdateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>[]
+        }
+        create: {
+          args: Prisma.MilestoneUpdateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>
+        }
+        createMany: {
+          args: Prisma.MilestoneUpdateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MilestoneUpdateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>[]
+        }
+        delete: {
+          args: Prisma.MilestoneUpdateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>
+        }
+        update: {
+          args: Prisma.MilestoneUpdateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>
+        }
+        deleteMany: {
+          args: Prisma.MilestoneUpdateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MilestoneUpdateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MilestoneUpdateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>[]
+        }
+        upsert: {
+          args: Prisma.MilestoneUpdateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestoneUpdatePayload>
+        }
+        aggregate: {
+          args: Prisma.MilestoneUpdateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMilestoneUpdate>
+        }
+        groupBy: {
+          args: Prisma.MilestoneUpdateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MilestoneUpdateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MilestoneUpdateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MilestoneUpdateCountAggregateOutputType> | number
+        }
+      }
+    }
     Donation: {
       payload: Prisma.$DonationPayload<ExtArgs>
       fields: Prisma.DonationFieldRefs
@@ -915,6 +1065,17 @@ export const OrgScalarFieldEnum = {
   logoUrl: 'logoUrl',
   docUrls: 'docUrls',
   onchainPda: 'onchainPda',
+  onchainGstinHash: 'onchainGstinHash',
+  gstin: 'gstin',
+  gstinVerified: 'gstinVerified',
+  gstinLegalName: 'gstinLegalName',
+  gstinTradeName: 'gstinTradeName',
+  gstinState: 'gstinState',
+  gstinStateCode: 'gstinStateCode',
+  gstinStatus: 'gstinStatus',
+  gstinRegistrationDate: 'gstinRegistrationDate',
+  gstinVerifiedAt: 'gstinVerifiedAt',
+  gstinLastCheckedAt: 'gstinLastCheckedAt',
   campaignsCreated: 'campaignsCreated',
   campaignsCompleted: 'campaignsCompleted',
   campaignsFailed: 'campaignsFailed',
@@ -960,6 +1121,7 @@ export const MilestoneScalarFieldEnum = {
   index: 'index',
   title: 'title',
   description: 'description',
+  dprPhaseLabel: 'dprPhaseLabel',
   amountLamports: 'amountLamports',
   releasePctBps: 'releasePctBps',
   proofUri: 'proofUri',
@@ -975,6 +1137,42 @@ export const MilestoneScalarFieldEnum = {
 } as const
 
 export type MilestoneScalarFieldEnum = (typeof MilestoneScalarFieldEnum)[keyof typeof MilestoneScalarFieldEnum]
+
+
+export const MilestoneProofScalarFieldEnum = {
+  id: 'id',
+  milestoneId: 'milestoneId',
+  gstin: 'gstin',
+  gstinVerified: 'gstinVerified',
+  vendorLegalName: 'vendorLegalName',
+  vendorState: 'vendorState',
+  isUnregisteredVendor: 'isUnregisteredVendor',
+  invoiceNumber: 'invoiceNumber',
+  invoiceAmountPaise: 'invoiceAmountPaise',
+  invoiceS3Key: 'invoiceS3Key',
+  invoiceHash: 'invoiceHash',
+  prevProofHash: 'prevProofHash',
+  onchainProofUri: 'onchainProofUri',
+  submittedAt: 'submittedAt'
+} as const
+
+export type MilestoneProofScalarFieldEnum = (typeof MilestoneProofScalarFieldEnum)[keyof typeof MilestoneProofScalarFieldEnum]
+
+
+export const MilestoneUpdateScalarFieldEnum = {
+  id: 'id',
+  milestoneId: 'milestoneId',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  mediaUrls: 'mediaUrls',
+  creatorWallet: 'creatorWallet',
+  contentHash: 'contentHash',
+  postedAt: 'postedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type MilestoneUpdateScalarFieldEnum = (typeof MilestoneUpdateScalarFieldEnum)[keyof typeof MilestoneUpdateScalarFieldEnum]
 
 
 export const DonationScalarFieldEnum = {
@@ -1080,6 +1278,13 @@ export type ListEnumOrgCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1108,13 +1313,6 @@ export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'CampaignState'
  */
 export type EnumCampaignStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CampaignState'>
@@ -1139,6 +1337,20 @@ export type EnumMilestoneStateFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'MilestoneState[]'
  */
 export type ListEnumMilestoneStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MilestoneState[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MilestoneUpdateType'
+ */
+export type EnumMilestoneUpdateTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MilestoneUpdateType'>
+    
+
+
+/**
+ * Reference to a field of type 'MilestoneUpdateType[]'
+ */
+export type ListEnumMilestoneUpdateTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MilestoneUpdateType[]'>
     
 
 
@@ -1268,6 +1480,8 @@ export type GlobalOmitConfig = {
   org?: Prisma.OrgOmit
   campaign?: Prisma.CampaignOmit
   milestone?: Prisma.MilestoneOmit
+  milestoneProof?: Prisma.MilestoneProofOmit
+  milestoneUpdate?: Prisma.MilestoneUpdateOmit
   donation?: Prisma.DonationOmit
   yieldAccrual?: Prisma.YieldAccrualOmit
 }

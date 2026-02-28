@@ -11,6 +11,10 @@ pub enum CredenceError {
     // Org
     #[msg("Org already exists for this authority")]
     OrgAlreadyExists,
+    #[msg("Invalid GSTIN hash")]
+    InvalidGstinHash,
+    #[msg("Vendor GSTIN does not match org GSTIN")]
+    OrgGstinMismatch,
 
     // Project
     #[msg("Project is not active")]

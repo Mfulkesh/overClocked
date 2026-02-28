@@ -1,4 +1,5 @@
 import * as anchor from "@coral-xyz/anchor";
+import crypto from "crypto";
 import { Program, BN } from "@coral-xyz/anchor";
 import { Contract } from "../target/types/contract";
 import {
@@ -11,7 +12,21 @@ import { assert, expect } from "chai";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+/** 32-byte zero array — used in tests that don't need a real GST invoice hash */
+const zeroHash = Array(32).fill(0);
+
+/** Deterministic mock invoice hash for a given invoice filename */
+function makeInvoiceHash(filename: string): number[] {
+  const hash = Buffer.alloc(32);
+  for (let i = 0; i < filename.length && i < 32; i++) {
+    hash[i] = filename.charCodeAt(i);
+  }
+  return Array.from(hash);
+}
+
+function makeSha256Bytes(input: string): number[] {
+  return Array.from(crypto.createHash("sha256").update(input).digest());
+}
 
 function pda(seeds: Buffer[], programId: PublicKey): [PublicKey, number] {
   return PublicKey.findProgramAddressSync(seeds, programId);
@@ -61,6 +76,8 @@ describe("credence", () => {
 
   // Project ID (32-byte seed)
   const projectId = Array.from(Buffer.alloc(32).fill(1));
+  const orgGstinHash = makeSha256Bytes("29AABCR1234A1Z5");
+  const wrongGstinHash = makeSha256Bytes("33AAACZ1234G1Z5");
 
   before(async () => {
     // Fund all wallets
@@ -124,7 +141,7 @@ describe("credence", () => {
   describe("create_org", () => {
     it("creates OrgAccount PDA for authority", async () => {
       await program.methods
-        .createOrg()
+        .createOrg(orgGstinHash)
         .accounts({
           authority: orgAuthority.publicKey,
           org: orgPda,
@@ -143,7 +160,7 @@ describe("credence", () => {
     it("fails to create duplicate org for same authority", async () => {
       try {
         await program.methods
-          .createOrg()
+          .createOrg(orgGstinHash)
           .accounts({
             authority: orgAuthority.publicKey,
             org: orgPda,
@@ -154,6 +171,26 @@ describe("credence", () => {
         assert.fail("Should have thrown");
       } catch (e) {
         expect(e.message).to.include("already in use");
+      }
+    });
+
+    it("rejects create_org with zero GSTIN hash", async () => {
+      const badAuthority = Keypair.generate();
+      await airdrop(provider, badAuthority.publicKey, 5);
+      const [badOrgPda] = pda([ORG_SEED, badAuthority.publicKey.toBuffer()], program.programId);
+      try {
+        await program.methods
+          .createOrg(zeroHash)
+          .accounts({
+            authority: badAuthority.publicKey,
+            org: badOrgPda,
+            systemProgram: SystemProgram.programId,
+          })
+          .signers([badAuthority])
+          .rpc();
+        assert.fail("Should have thrown");
+      } catch (e) {
+        expect(e.message).to.include("InvalidGstinHash");
       }
     });
   });
@@ -348,12 +385,20 @@ describe("credence", () => {
 
   // ── 5. Submit Milestone Proof ─────────────────────────────────────────────
   describe("submit_milestone_proof", () => {
-    it("creator submits proof for milestone 0, opens 2-second voting window", async () => {
+    it("creator submits proof for milestone 0 and opens review window", async () => {
+      const proofHash = makeInvoiceHash("venue-invoice-raj-events.pdf");
       await program.methods
-        .submitMilestoneProof(0, "https://s3.amazonaws.com/credence/proof0.pdf", new BN(2))
+        .submitMilestoneProof(
+          0,
+          "https://s3.amazonaws.com/credence/proof0.pdf",
+          proofHash,
+          orgGstinHash,
+          new BN(2)
+        )
         .accounts({
           creator: orgAuthority.publicKey,
           project: projectPda,
+          org: orgPda,
         })
         .signers([orgAuthority])
         .rpc();
@@ -364,15 +409,17 @@ describe("credence", () => {
       assert.deepEqual(m.state, { underReview: {} });
       assert.equal(m.totalEligible.toNumber(), 4 * LAMPORTS_PER_SOL);
       assert.isAbove(m.votingEnd.toNumber(), m.votingStart.toNumber());
+      assert.deepEqual(Array.from(m.invoiceHash), proofHash);
     });
 
     it("stranger cannot submit proof (not creator)", async () => {
       try {
         await program.methods
-          .submitMilestoneProof(0, "https://bad.com/proof", new BN(2))
+          .submitMilestoneProof(0, "https://bad.com/proof", zeroHash, orgGstinHash, new BN(2))
           .accounts({
             creator: stranger.publicKey,
             project: projectPda,
+            org: orgPda,
           })
           .signers([stranger])
           .rpc();
@@ -382,13 +429,31 @@ describe("credence", () => {
       }
     });
 
-    it("rejects proof URI longer than 200 chars", async () => {
+    it("rejects vendor GSTIN hash that does not match org GSTIN", async () => {
       try {
         await program.methods
-          .submitMilestoneProof(1, "x".repeat(201), new BN(86400))
+          .submitMilestoneProof(1, "https://bad.com/proof", zeroHash, wrongGstinHash, new BN(2))
           .accounts({
             creator: orgAuthority.publicKey,
             project: projectPda,
+            org: orgPda,
+          })
+          .signers([orgAuthority])
+          .rpc();
+        assert.fail("Should have thrown");
+      } catch (e) {
+        expect(e.message).to.include("OrgGstinMismatch");
+      }
+    });
+
+    it("rejects proof URI longer than 200 chars", async () => {
+      try {
+        await program.methods
+          .submitMilestoneProof(1, "x".repeat(201), zeroHash, orgGstinHash, new BN(86400))
+          .accounts({
+            creator: orgAuthority.publicKey,
+            project: projectPda,
+            org: orgPda,
           })
           .signers([orgAuthority])
           .rpc();
@@ -396,6 +461,12 @@ describe("credence", () => {
       } catch (e) {
         expect(e.message).to.include("InvalidProofUri");
       }
+    });
+
+    it("voting window below 48h is clamped up to 48h (172800s)", async () => {
+      const project = await program.account.project.fetch(projectPda);
+      const m = project.milestones[0];
+      assert.isAtLeast(m.votingEnd.toNumber() - m.votingStart.toNumber(), 172800);
     });
   });
 
@@ -479,10 +550,7 @@ describe("credence", () => {
 
   // ── 7. Finalize Milestone (approved) ──────────────────────────────────────
   describe("finalize_milestone — approved", () => {
-    it("waits for voting window to expire and finalizes (all votes YES)", async () => {
-      // Wait for the 2-second voting window
-      await sleep(3000);
-
+    it("finalizes immediately when all eligible stake voted YES", async () => {
       const creatorBalanceBefore = await provider.connection.getBalance(
         orgAuthority.publicKey
       );
@@ -512,24 +580,41 @@ describe("credence", () => {
     });
   });
 
-  // ── 8. Finalize Milestone (rejected — quorum not met) ─────────────────────
-  describe("finalize_milestone — rejected (quorum not met)", () => {
-    it("opens milestone 1 proof, only donor1 votes (50% stake, quorum is 10% so still passes)", async () => {
-      // This test demonstrates quorum check: 2 SOL out of 4 SOL raised = 50% participation > 10% quorum
-      // But both voted YES so it should pass. Let's test a case where the voting window expires with zero votes.
-
-      // Submit proof for milestone 1 with 2-second window
+  // ── 8. Finalize Milestone (rejected) ──────────────────────────────────────
+  describe("finalize_milestone — rejected", () => {
+    it("opens milestone 1 proof, both donors vote NO, then rejection resets to Pending", async () => {
       await program.methods
-        .submitMilestoneProof(1, "https://s3.amazonaws.com/credence/proof1.pdf", new BN(2))
+        .submitMilestoneProof(1, "https://s3.amazonaws.com/credence/proof1.pdf", zeroHash, zeroHash, new BN(2))
         .accounts({
           creator: orgAuthority.publicKey,
           project: projectPda,
+          org: orgPda,
         })
         .signers([orgAuthority])
         .rpc();
 
-      // Do NOT vote — let window expire with 0 votes (quorum not met)
-      await sleep(3000);
+      const proj = await program.account.project.fetch(projectPda);
+      assert.deepEqual(Array.from(proj.milestones[1].invoiceHash), zeroHash);
+
+      await program.methods
+        .voteMilestone(1, false)
+        .accounts({
+          voter: donor1.publicKey,
+          project: projectPda,
+          donorRecord: donor1RecordPda,
+        })
+        .signers([donor1])
+        .rpc();
+
+      await program.methods
+        .voteMilestone(1, false)
+        .accounts({
+          voter: donor2.publicKey,
+          project: projectPda,
+          donorRecord: donor2RecordPda,
+        })
+        .signers([donor2])
+        .rpc();
 
       await program.methods
         .finalizeMilestone(1)
@@ -556,15 +641,34 @@ describe("credence", () => {
       // Resubmit and reject 2 more times (already at revision_count=1)
       for (let i = 0; i < 2; i++) {
         await program.methods
-          .submitMilestoneProof(1, "https://s3.amazonaws.com/credence/proof1.pdf", new BN(2))
+          .submitMilestoneProof(1, "https://s3.amazonaws.com/credence/proof1.pdf", zeroHash, zeroHash, new BN(2))
           .accounts({
             creator: orgAuthority.publicKey,
             project: projectPda,
+            org: orgPda,
           })
           .signers([orgAuthority])
           .rpc();
 
-        await sleep(3000);
+        await program.methods
+          .voteMilestone(1, false)
+          .accounts({
+            voter: donor1.publicKey,
+            project: projectPda,
+            donorRecord: donor1RecordPda,
+          })
+          .signers([donor1])
+          .rpc();
+
+        await program.methods
+          .voteMilestone(1, false)
+          .accounts({
+            voter: donor2.publicKey,
+            project: projectPda,
+            donorRecord: donor2RecordPda,
+          })
+          .signers([donor2])
+          .rpc();
 
         await program.methods
           .finalizeMilestone(1)
@@ -659,7 +763,7 @@ describe("credence", () => {
         program.programId
       );
 
-      await program.methods.createOrg()
+      await program.methods.createOrg(orgGstinHash)
         .accounts({ authority: earlyOrgAuthority.publicKey, org: earlyOrgPda, systemProgram: SystemProgram.programId })
         .signers([earlyOrgAuthority]).rpc();
 
@@ -744,7 +848,7 @@ describe("credence", () => {
       );
       [overrideVaultPda] = pda([VAULT_SEED, overrideProjectPda.toBuffer()], program.programId);
 
-      await program.methods.createOrg()
+      await program.methods.createOrg(orgGstinHash)
         .accounts({ authority: overrideOrgAuthority.publicKey, org: overrideOrgPda, systemProgram: SystemProgram.programId })
         .signers([overrideOrgAuthority]).rpc();
 

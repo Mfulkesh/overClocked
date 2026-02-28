@@ -52,6 +52,7 @@ export type MilestoneMinAggregateOutputType = {
   index: number | null
   title: string | null
   description: string | null
+  dprPhaseLabel: string | null
   amountLamports: bigint | null
   releasePctBps: number | null
   proofUri: string | null
@@ -72,6 +73,7 @@ export type MilestoneMaxAggregateOutputType = {
   index: number | null
   title: string | null
   description: string | null
+  dprPhaseLabel: string | null
   amountLamports: bigint | null
   releasePctBps: number | null
   proofUri: string | null
@@ -92,6 +94,7 @@ export type MilestoneCountAggregateOutputType = {
   index: number
   title: number
   description: number
+  dprPhaseLabel: number
   amountLamports: number
   releasePctBps: number
   proofUri: number
@@ -134,6 +137,7 @@ export type MilestoneMinAggregateInputType = {
   index?: true
   title?: true
   description?: true
+  dprPhaseLabel?: true
   amountLamports?: true
   releasePctBps?: true
   proofUri?: true
@@ -154,6 +158,7 @@ export type MilestoneMaxAggregateInputType = {
   index?: true
   title?: true
   description?: true
+  dprPhaseLabel?: true
   amountLamports?: true
   releasePctBps?: true
   proofUri?: true
@@ -174,6 +179,7 @@ export type MilestoneCountAggregateInputType = {
   index?: true
   title?: true
   description?: true
+  dprPhaseLabel?: true
   amountLamports?: true
   releasePctBps?: true
   proofUri?: true
@@ -281,6 +287,7 @@ export type MilestoneGroupByOutputType = {
   index: number
   title: string
   description: string | null
+  dprPhaseLabel: string | null
   amountLamports: bigint
   releasePctBps: number
   proofUri: string | null
@@ -324,6 +331,7 @@ export type MilestoneWhereInput = {
   index?: Prisma.IntFilter<"Milestone"> | number
   title?: Prisma.StringFilter<"Milestone"> | string
   description?: Prisma.StringNullableFilter<"Milestone"> | string | null
+  dprPhaseLabel?: Prisma.StringNullableFilter<"Milestone"> | string | null
   amountLamports?: Prisma.BigIntFilter<"Milestone"> | bigint | number
   releasePctBps?: Prisma.IntFilter<"Milestone"> | number
   proofUri?: Prisma.StringNullableFilter<"Milestone"> | string | null
@@ -337,6 +345,8 @@ export type MilestoneWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
+  proof?: Prisma.XOR<Prisma.MilestoneProofNullableScalarRelationFilter, Prisma.MilestoneProofWhereInput> | null
+  updates?: Prisma.MilestoneUpdateListRelationFilter
 }
 
 export type MilestoneOrderByWithRelationInput = {
@@ -345,6 +355,7 @@ export type MilestoneOrderByWithRelationInput = {
   index?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  dprPhaseLabel?: Prisma.SortOrderInput | Prisma.SortOrder
   amountLamports?: Prisma.SortOrder
   releasePctBps?: Prisma.SortOrder
   proofUri?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -358,6 +369,8 @@ export type MilestoneOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campaign?: Prisma.CampaignOrderByWithRelationInput
+  proof?: Prisma.MilestoneProofOrderByWithRelationInput
+  updates?: Prisma.MilestoneUpdateOrderByRelationAggregateInput
 }
 
 export type MilestoneWhereUniqueInput = Prisma.AtLeast<{
@@ -369,6 +382,7 @@ export type MilestoneWhereUniqueInput = Prisma.AtLeast<{
   index?: Prisma.IntFilter<"Milestone"> | number
   title?: Prisma.StringFilter<"Milestone"> | string
   description?: Prisma.StringNullableFilter<"Milestone"> | string | null
+  dprPhaseLabel?: Prisma.StringNullableFilter<"Milestone"> | string | null
   amountLamports?: Prisma.BigIntFilter<"Milestone"> | bigint | number
   releasePctBps?: Prisma.IntFilter<"Milestone"> | number
   proofUri?: Prisma.StringNullableFilter<"Milestone"> | string | null
@@ -382,6 +396,8 @@ export type MilestoneWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
+  proof?: Prisma.XOR<Prisma.MilestoneProofNullableScalarRelationFilter, Prisma.MilestoneProofWhereInput> | null
+  updates?: Prisma.MilestoneUpdateListRelationFilter
 }, "id">
 
 export type MilestoneOrderByWithAggregationInput = {
@@ -390,6 +406,7 @@ export type MilestoneOrderByWithAggregationInput = {
   index?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  dprPhaseLabel?: Prisma.SortOrderInput | Prisma.SortOrder
   amountLamports?: Prisma.SortOrder
   releasePctBps?: Prisma.SortOrder
   proofUri?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -418,6 +435,7 @@ export type MilestoneScalarWhereWithAggregatesInput = {
   index?: Prisma.IntWithAggregatesFilter<"Milestone"> | number
   title?: Prisma.StringWithAggregatesFilter<"Milestone"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Milestone"> | string | null
+  dprPhaseLabel?: Prisma.StringNullableWithAggregatesFilter<"Milestone"> | string | null
   amountLamports?: Prisma.BigIntWithAggregatesFilter<"Milestone"> | bigint | number
   releasePctBps?: Prisma.IntWithAggregatesFilter<"Milestone"> | number
   proofUri?: Prisma.StringNullableWithAggregatesFilter<"Milestone"> | string | null
@@ -437,6 +455,7 @@ export type MilestoneCreateInput = {
   index: number
   title: string
   description?: string | null
+  dprPhaseLabel?: string | null
   amountLamports?: bigint | number
   releasePctBps?: number
   proofUri?: string | null
@@ -450,6 +469,8 @@ export type MilestoneCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   campaign: Prisma.CampaignCreateNestedOneWithoutMilestonesInput
+  proof?: Prisma.MilestoneProofCreateNestedOneWithoutMilestoneInput
+  updates?: Prisma.MilestoneUpdateCreateNestedManyWithoutMilestoneInput
 }
 
 export type MilestoneUncheckedCreateInput = {
@@ -458,6 +479,7 @@ export type MilestoneUncheckedCreateInput = {
   index: number
   title: string
   description?: string | null
+  dprPhaseLabel?: string | null
   amountLamports?: bigint | number
   releasePctBps?: number
   proofUri?: string | null
@@ -470,6 +492,8 @@ export type MilestoneUncheckedCreateInput = {
   revisionCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  proof?: Prisma.MilestoneProofUncheckedCreateNestedOneWithoutMilestoneInput
+  updates?: Prisma.MilestoneUpdateUncheckedCreateNestedManyWithoutMilestoneInput
 }
 
 export type MilestoneUpdateInput = {
@@ -477,6 +501,7 @@ export type MilestoneUpdateInput = {
   index?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
   proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -490,6 +515,8 @@ export type MilestoneUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campaign?: Prisma.CampaignUpdateOneRequiredWithoutMilestonesNestedInput
+  proof?: Prisma.MilestoneProofUpdateOneWithoutMilestoneNestedInput
+  updates?: Prisma.MilestoneUpdateUpdateManyWithoutMilestoneNestedInput
 }
 
 export type MilestoneUncheckedUpdateInput = {
@@ -498,6 +525,7 @@ export type MilestoneUncheckedUpdateInput = {
   index?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
   proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -510,6 +538,8 @@ export type MilestoneUncheckedUpdateInput = {
   revisionCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proof?: Prisma.MilestoneProofUncheckedUpdateOneWithoutMilestoneNestedInput
+  updates?: Prisma.MilestoneUpdateUncheckedUpdateManyWithoutMilestoneNestedInput
 }
 
 export type MilestoneCreateManyInput = {
@@ -518,6 +548,7 @@ export type MilestoneCreateManyInput = {
   index: number
   title: string
   description?: string | null
+  dprPhaseLabel?: string | null
   amountLamports?: bigint | number
   releasePctBps?: number
   proofUri?: string | null
@@ -537,6 +568,7 @@ export type MilestoneUpdateManyMutationInput = {
   index?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
   proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -557,6 +589,7 @@ export type MilestoneUncheckedUpdateManyInput = {
   index?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
   proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -587,6 +620,7 @@ export type MilestoneCountOrderByAggregateInput = {
   index?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  dprPhaseLabel?: Prisma.SortOrder
   amountLamports?: Prisma.SortOrder
   releasePctBps?: Prisma.SortOrder
   proofUri?: Prisma.SortOrder
@@ -617,6 +651,7 @@ export type MilestoneMaxOrderByAggregateInput = {
   index?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  dprPhaseLabel?: Prisma.SortOrder
   amountLamports?: Prisma.SortOrder
   releasePctBps?: Prisma.SortOrder
   proofUri?: Prisma.SortOrder
@@ -637,6 +672,7 @@ export type MilestoneMinOrderByAggregateInput = {
   index?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  dprPhaseLabel?: Prisma.SortOrder
   amountLamports?: Prisma.SortOrder
   releasePctBps?: Prisma.SortOrder
   proofUri?: Prisma.SortOrder
@@ -659,6 +695,11 @@ export type MilestoneSumOrderByAggregateInput = {
   quorumBps?: Prisma.SortOrder
   votingWindowSecs?: Prisma.SortOrder
   revisionCount?: Prisma.SortOrder
+}
+
+export type MilestoneScalarRelationFilter = {
+  is?: Prisma.MilestoneWhereInput
+  isNot?: Prisma.MilestoneWhereInput
 }
 
 export type MilestoneCreateNestedManyWithoutCampaignInput = {
@@ -707,11 +748,40 @@ export type EnumMilestoneStateFieldUpdateOperationsInput = {
   set?: $Enums.MilestoneState
 }
 
+export type MilestoneCreateNestedOneWithoutProofInput = {
+  create?: Prisma.XOR<Prisma.MilestoneCreateWithoutProofInput, Prisma.MilestoneUncheckedCreateWithoutProofInput>
+  connectOrCreate?: Prisma.MilestoneCreateOrConnectWithoutProofInput
+  connect?: Prisma.MilestoneWhereUniqueInput
+}
+
+export type MilestoneUpdateOneRequiredWithoutProofNestedInput = {
+  create?: Prisma.XOR<Prisma.MilestoneCreateWithoutProofInput, Prisma.MilestoneUncheckedCreateWithoutProofInput>
+  connectOrCreate?: Prisma.MilestoneCreateOrConnectWithoutProofInput
+  upsert?: Prisma.MilestoneUpsertWithoutProofInput
+  connect?: Prisma.MilestoneWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MilestoneUpdateToOneWithWhereWithoutProofInput, Prisma.MilestoneUpdateWithoutProofInput>, Prisma.MilestoneUncheckedUpdateWithoutProofInput>
+}
+
+export type MilestoneCreateNestedOneWithoutUpdatesInput = {
+  create?: Prisma.XOR<Prisma.MilestoneCreateWithoutUpdatesInput, Prisma.MilestoneUncheckedCreateWithoutUpdatesInput>
+  connectOrCreate?: Prisma.MilestoneCreateOrConnectWithoutUpdatesInput
+  connect?: Prisma.MilestoneWhereUniqueInput
+}
+
+export type MilestoneUpdateOneRequiredWithoutUpdatesNestedInput = {
+  create?: Prisma.XOR<Prisma.MilestoneCreateWithoutUpdatesInput, Prisma.MilestoneUncheckedCreateWithoutUpdatesInput>
+  connectOrCreate?: Prisma.MilestoneCreateOrConnectWithoutUpdatesInput
+  upsert?: Prisma.MilestoneUpsertWithoutUpdatesInput
+  connect?: Prisma.MilestoneWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MilestoneUpdateToOneWithWhereWithoutUpdatesInput, Prisma.MilestoneUpdateWithoutUpdatesInput>, Prisma.MilestoneUncheckedUpdateWithoutUpdatesInput>
+}
+
 export type MilestoneCreateWithoutCampaignInput = {
   id?: string
   index: number
   title: string
   description?: string | null
+  dprPhaseLabel?: string | null
   amountLamports?: bigint | number
   releasePctBps?: number
   proofUri?: string | null
@@ -724,6 +794,8 @@ export type MilestoneCreateWithoutCampaignInput = {
   revisionCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  proof?: Prisma.MilestoneProofCreateNestedOneWithoutMilestoneInput
+  updates?: Prisma.MilestoneUpdateCreateNestedManyWithoutMilestoneInput
 }
 
 export type MilestoneUncheckedCreateWithoutCampaignInput = {
@@ -731,6 +803,7 @@ export type MilestoneUncheckedCreateWithoutCampaignInput = {
   index: number
   title: string
   description?: string | null
+  dprPhaseLabel?: string | null
   amountLamports?: bigint | number
   releasePctBps?: number
   proofUri?: string | null
@@ -743,6 +816,8 @@ export type MilestoneUncheckedCreateWithoutCampaignInput = {
   revisionCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  proof?: Prisma.MilestoneProofUncheckedCreateNestedOneWithoutMilestoneInput
+  updates?: Prisma.MilestoneUpdateUncheckedCreateNestedManyWithoutMilestoneInput
 }
 
 export type MilestoneCreateOrConnectWithoutCampaignInput = {
@@ -780,6 +855,7 @@ export type MilestoneScalarWhereInput = {
   index?: Prisma.IntFilter<"Milestone"> | number
   title?: Prisma.StringFilter<"Milestone"> | string
   description?: Prisma.StringNullableFilter<"Milestone"> | string | null
+  dprPhaseLabel?: Prisma.StringNullableFilter<"Milestone"> | string | null
   amountLamports?: Prisma.BigIntFilter<"Milestone"> | bigint | number
   releasePctBps?: Prisma.IntFilter<"Milestone"> | number
   proofUri?: Prisma.StringNullableFilter<"Milestone"> | string | null
@@ -794,11 +870,220 @@ export type MilestoneScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
 }
 
+export type MilestoneCreateWithoutProofInput = {
+  id?: string
+  index: number
+  title: string
+  description?: string | null
+  dprPhaseLabel?: string | null
+  amountLamports?: bigint | number
+  releasePctBps?: number
+  proofUri?: string | null
+  proofNote?: string | null
+  thresholdBps?: number
+  quorumBps?: number
+  votingWindowSecs?: number
+  deadline?: Date | string | null
+  state?: $Enums.MilestoneState
+  revisionCount?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campaign: Prisma.CampaignCreateNestedOneWithoutMilestonesInput
+  updates?: Prisma.MilestoneUpdateCreateNestedManyWithoutMilestoneInput
+}
+
+export type MilestoneUncheckedCreateWithoutProofInput = {
+  id?: string
+  campaignId: string
+  index: number
+  title: string
+  description?: string | null
+  dprPhaseLabel?: string | null
+  amountLamports?: bigint | number
+  releasePctBps?: number
+  proofUri?: string | null
+  proofNote?: string | null
+  thresholdBps?: number
+  quorumBps?: number
+  votingWindowSecs?: number
+  deadline?: Date | string | null
+  state?: $Enums.MilestoneState
+  revisionCount?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updates?: Prisma.MilestoneUpdateUncheckedCreateNestedManyWithoutMilestoneInput
+}
+
+export type MilestoneCreateOrConnectWithoutProofInput = {
+  where: Prisma.MilestoneWhereUniqueInput
+  create: Prisma.XOR<Prisma.MilestoneCreateWithoutProofInput, Prisma.MilestoneUncheckedCreateWithoutProofInput>
+}
+
+export type MilestoneUpsertWithoutProofInput = {
+  update: Prisma.XOR<Prisma.MilestoneUpdateWithoutProofInput, Prisma.MilestoneUncheckedUpdateWithoutProofInput>
+  create: Prisma.XOR<Prisma.MilestoneCreateWithoutProofInput, Prisma.MilestoneUncheckedCreateWithoutProofInput>
+  where?: Prisma.MilestoneWhereInput
+}
+
+export type MilestoneUpdateToOneWithWhereWithoutProofInput = {
+  where?: Prisma.MilestoneWhereInput
+  data: Prisma.XOR<Prisma.MilestoneUpdateWithoutProofInput, Prisma.MilestoneUncheckedUpdateWithoutProofInput>
+}
+
+export type MilestoneUpdateWithoutProofInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  index?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
+  proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thresholdBps?: Prisma.IntFieldUpdateOperationsInput | number
+  quorumBps?: Prisma.IntFieldUpdateOperationsInput | number
+  votingWindowSecs?: Prisma.IntFieldUpdateOperationsInput | number
+  deadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  state?: Prisma.EnumMilestoneStateFieldUpdateOperationsInput | $Enums.MilestoneState
+  revisionCount?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campaign?: Prisma.CampaignUpdateOneRequiredWithoutMilestonesNestedInput
+  updates?: Prisma.MilestoneUpdateUpdateManyWithoutMilestoneNestedInput
+}
+
+export type MilestoneUncheckedUpdateWithoutProofInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  campaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  index?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
+  proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thresholdBps?: Prisma.IntFieldUpdateOperationsInput | number
+  quorumBps?: Prisma.IntFieldUpdateOperationsInput | number
+  votingWindowSecs?: Prisma.IntFieldUpdateOperationsInput | number
+  deadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  state?: Prisma.EnumMilestoneStateFieldUpdateOperationsInput | $Enums.MilestoneState
+  revisionCount?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updates?: Prisma.MilestoneUpdateUncheckedUpdateManyWithoutMilestoneNestedInput
+}
+
+export type MilestoneCreateWithoutUpdatesInput = {
+  id?: string
+  index: number
+  title: string
+  description?: string | null
+  dprPhaseLabel?: string | null
+  amountLamports?: bigint | number
+  releasePctBps?: number
+  proofUri?: string | null
+  proofNote?: string | null
+  thresholdBps?: number
+  quorumBps?: number
+  votingWindowSecs?: number
+  deadline?: Date | string | null
+  state?: $Enums.MilestoneState
+  revisionCount?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campaign: Prisma.CampaignCreateNestedOneWithoutMilestonesInput
+  proof?: Prisma.MilestoneProofCreateNestedOneWithoutMilestoneInput
+}
+
+export type MilestoneUncheckedCreateWithoutUpdatesInput = {
+  id?: string
+  campaignId: string
+  index: number
+  title: string
+  description?: string | null
+  dprPhaseLabel?: string | null
+  amountLamports?: bigint | number
+  releasePctBps?: number
+  proofUri?: string | null
+  proofNote?: string | null
+  thresholdBps?: number
+  quorumBps?: number
+  votingWindowSecs?: number
+  deadline?: Date | string | null
+  state?: $Enums.MilestoneState
+  revisionCount?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  proof?: Prisma.MilestoneProofUncheckedCreateNestedOneWithoutMilestoneInput
+}
+
+export type MilestoneCreateOrConnectWithoutUpdatesInput = {
+  where: Prisma.MilestoneWhereUniqueInput
+  create: Prisma.XOR<Prisma.MilestoneCreateWithoutUpdatesInput, Prisma.MilestoneUncheckedCreateWithoutUpdatesInput>
+}
+
+export type MilestoneUpsertWithoutUpdatesInput = {
+  update: Prisma.XOR<Prisma.MilestoneUpdateWithoutUpdatesInput, Prisma.MilestoneUncheckedUpdateWithoutUpdatesInput>
+  create: Prisma.XOR<Prisma.MilestoneCreateWithoutUpdatesInput, Prisma.MilestoneUncheckedCreateWithoutUpdatesInput>
+  where?: Prisma.MilestoneWhereInput
+}
+
+export type MilestoneUpdateToOneWithWhereWithoutUpdatesInput = {
+  where?: Prisma.MilestoneWhereInput
+  data: Prisma.XOR<Prisma.MilestoneUpdateWithoutUpdatesInput, Prisma.MilestoneUncheckedUpdateWithoutUpdatesInput>
+}
+
+export type MilestoneUpdateWithoutUpdatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  index?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
+  proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thresholdBps?: Prisma.IntFieldUpdateOperationsInput | number
+  quorumBps?: Prisma.IntFieldUpdateOperationsInput | number
+  votingWindowSecs?: Prisma.IntFieldUpdateOperationsInput | number
+  deadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  state?: Prisma.EnumMilestoneStateFieldUpdateOperationsInput | $Enums.MilestoneState
+  revisionCount?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campaign?: Prisma.CampaignUpdateOneRequiredWithoutMilestonesNestedInput
+  proof?: Prisma.MilestoneProofUpdateOneWithoutMilestoneNestedInput
+}
+
+export type MilestoneUncheckedUpdateWithoutUpdatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  campaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  index?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
+  proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thresholdBps?: Prisma.IntFieldUpdateOperationsInput | number
+  quorumBps?: Prisma.IntFieldUpdateOperationsInput | number
+  votingWindowSecs?: Prisma.IntFieldUpdateOperationsInput | number
+  deadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  state?: Prisma.EnumMilestoneStateFieldUpdateOperationsInput | $Enums.MilestoneState
+  revisionCount?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proof?: Prisma.MilestoneProofUncheckedUpdateOneWithoutMilestoneNestedInput
+}
+
 export type MilestoneCreateManyCampaignInput = {
   id?: string
   index: number
   title: string
   description?: string | null
+  dprPhaseLabel?: string | null
   amountLamports?: bigint | number
   releasePctBps?: number
   proofUri?: string | null
@@ -818,6 +1103,7 @@ export type MilestoneUpdateWithoutCampaignInput = {
   index?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
   proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -830,6 +1116,8 @@ export type MilestoneUpdateWithoutCampaignInput = {
   revisionCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proof?: Prisma.MilestoneProofUpdateOneWithoutMilestoneNestedInput
+  updates?: Prisma.MilestoneUpdateUpdateManyWithoutMilestoneNestedInput
 }
 
 export type MilestoneUncheckedUpdateWithoutCampaignInput = {
@@ -837,6 +1125,7 @@ export type MilestoneUncheckedUpdateWithoutCampaignInput = {
   index?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
   proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -849,6 +1138,8 @@ export type MilestoneUncheckedUpdateWithoutCampaignInput = {
   revisionCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proof?: Prisma.MilestoneProofUncheckedUpdateOneWithoutMilestoneNestedInput
+  updates?: Prisma.MilestoneUpdateUncheckedUpdateManyWithoutMilestoneNestedInput
 }
 
 export type MilestoneUncheckedUpdateManyWithoutCampaignInput = {
@@ -856,6 +1147,7 @@ export type MilestoneUncheckedUpdateManyWithoutCampaignInput = {
   index?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dprPhaseLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountLamports?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   releasePctBps?: Prisma.IntFieldUpdateOperationsInput | number
   proofUri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -870,6 +1162,35 @@ export type MilestoneUncheckedUpdateManyWithoutCampaignInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type MilestoneCountOutputType
+ */
+
+export type MilestoneCountOutputType = {
+  updates: number
+}
+
+export type MilestoneCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  updates?: boolean | MilestoneCountOutputTypeCountUpdatesArgs
+}
+
+/**
+ * MilestoneCountOutputType without action
+ */
+export type MilestoneCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MilestoneCountOutputType
+   */
+  select?: Prisma.MilestoneCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MilestoneCountOutputType without action
+ */
+export type MilestoneCountOutputTypeCountUpdatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MilestoneUpdateWhereInput
+}
 
 
 export type MilestoneSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -878,6 +1199,7 @@ export type MilestoneSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   index?: boolean
   title?: boolean
   description?: boolean
+  dprPhaseLabel?: boolean
   amountLamports?: boolean
   releasePctBps?: boolean
   proofUri?: boolean
@@ -891,6 +1213,9 @@ export type MilestoneSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   updatedAt?: boolean
   campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
+  proof?: boolean | Prisma.Milestone$proofArgs<ExtArgs>
+  updates?: boolean | Prisma.Milestone$updatesArgs<ExtArgs>
+  _count?: boolean | Prisma.MilestoneCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["milestone"]>
 
 export type MilestoneSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -899,6 +1224,7 @@ export type MilestoneSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   index?: boolean
   title?: boolean
   description?: boolean
+  dprPhaseLabel?: boolean
   amountLamports?: boolean
   releasePctBps?: boolean
   proofUri?: boolean
@@ -920,6 +1246,7 @@ export type MilestoneSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   index?: boolean
   title?: boolean
   description?: boolean
+  dprPhaseLabel?: boolean
   amountLamports?: boolean
   releasePctBps?: boolean
   proofUri?: boolean
@@ -941,6 +1268,7 @@ export type MilestoneSelectScalar = {
   index?: boolean
   title?: boolean
   description?: boolean
+  dprPhaseLabel?: boolean
   amountLamports?: boolean
   releasePctBps?: boolean
   proofUri?: boolean
@@ -955,9 +1283,12 @@ export type MilestoneSelectScalar = {
   updatedAt?: boolean
 }
 
-export type MilestoneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "campaignId" | "index" | "title" | "description" | "amountLamports" | "releasePctBps" | "proofUri" | "proofNote" | "thresholdBps" | "quorumBps" | "votingWindowSecs" | "deadline" | "state" | "revisionCount" | "createdAt" | "updatedAt", ExtArgs["result"]["milestone"]>
+export type MilestoneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "campaignId" | "index" | "title" | "description" | "dprPhaseLabel" | "amountLamports" | "releasePctBps" | "proofUri" | "proofNote" | "thresholdBps" | "quorumBps" | "votingWindowSecs" | "deadline" | "state" | "revisionCount" | "createdAt" | "updatedAt", ExtArgs["result"]["milestone"]>
 export type MilestoneInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
+  proof?: boolean | Prisma.Milestone$proofArgs<ExtArgs>
+  updates?: boolean | Prisma.Milestone$updatesArgs<ExtArgs>
+  _count?: boolean | Prisma.MilestoneCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MilestoneIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
@@ -970,6 +1301,8 @@ export type $MilestonePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Milestone"
   objects: {
     campaign: Prisma.$CampaignPayload<ExtArgs>
+    proof: Prisma.$MilestoneProofPayload<ExtArgs> | null
+    updates: Prisma.$MilestoneUpdatePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -977,6 +1310,7 @@ export type $MilestonePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     index: number
     title: string
     description: string | null
+    dprPhaseLabel: string | null
     amountLamports: bigint
     releasePctBps: number
     proofUri: string | null
@@ -1384,6 +1718,8 @@ readonly fields: MilestoneFieldRefs;
 export interface Prisma__MilestoneClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   campaign<T extends Prisma.CampaignDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CampaignDefaultArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  proof<T extends Prisma.Milestone$proofArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Milestone$proofArgs<ExtArgs>>): Prisma.Prisma__MilestoneProofClient<runtime.Types.Result.GetResult<Prisma.$MilestoneProofPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updates<T extends Prisma.Milestone$updatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Milestone$updatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MilestoneUpdatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1418,6 +1754,7 @@ export interface MilestoneFieldRefs {
   readonly index: Prisma.FieldRef<"Milestone", 'Int'>
   readonly title: Prisma.FieldRef<"Milestone", 'String'>
   readonly description: Prisma.FieldRef<"Milestone", 'String'>
+  readonly dprPhaseLabel: Prisma.FieldRef<"Milestone", 'String'>
   readonly amountLamports: Prisma.FieldRef<"Milestone", 'BigInt'>
   readonly releasePctBps: Prisma.FieldRef<"Milestone", 'Int'>
   readonly proofUri: Prisma.FieldRef<"Milestone", 'String'>
@@ -1823,6 +2160,49 @@ export type MilestoneDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Milestones to delete.
    */
   limit?: number
+}
+
+/**
+ * Milestone.proof
+ */
+export type Milestone$proofArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MilestoneProof
+   */
+  select?: Prisma.MilestoneProofSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MilestoneProof
+   */
+  omit?: Prisma.MilestoneProofOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MilestoneProofInclude<ExtArgs> | null
+  where?: Prisma.MilestoneProofWhereInput
+}
+
+/**
+ * Milestone.updates
+ */
+export type Milestone$updatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MilestoneUpdate
+   */
+  select?: Prisma.MilestoneUpdateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MilestoneUpdate
+   */
+  omit?: Prisma.MilestoneUpdateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MilestoneUpdateInclude<ExtArgs> | null
+  where?: Prisma.MilestoneUpdateWhereInput
+  orderBy?: Prisma.MilestoneUpdateOrderByWithRelationInput | Prisma.MilestoneUpdateOrderByWithRelationInput[]
+  cursor?: Prisma.MilestoneUpdateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MilestoneUpdateScalarFieldEnum | Prisma.MilestoneUpdateScalarFieldEnum[]
 }
 
 /**

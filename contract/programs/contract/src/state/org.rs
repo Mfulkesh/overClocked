@@ -3,6 +3,8 @@ use anchor_lang::prelude::*;
 #[account]
 pub struct OrgAccount {
     pub authority: Pubkey,
+    /// SHA-256 hash of the org's verified GSTIN (uppercase, trimmed).
+    pub gstin_hash: [u8; 32],
     pub campaigns_created: u32,
     pub campaigns_completed: u32,
     pub campaigns_failed: u32,
@@ -13,6 +15,6 @@ pub struct OrgAccount {
 }
 
 impl OrgAccount {
-    // 8 + 32 + 4 + 4 + 4 + 8 + 8 + 2 + 1 = 71
-    pub const SPACE: usize = 8 + 32 + 4 + 4 + 4 + 8 + 8 + 2 + 1; // 71
+    // 8 + 32 + 32 + 4 + 4 + 4 + 8 + 8 + 2 + 1 = 103
+    pub const SPACE: usize = 8 + 32 + 32 + 4 + 4 + 4 + 8 + 8 + 2 + 1;
 }

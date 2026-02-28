@@ -2,8 +2,12 @@ use anchor_lang::prelude::*;
 use crate::{
     constants::*,
     error::CredenceError,
-    state::{Project, MilestoneState, ProjectState},
+    state::{MilestoneState, OrgAccount, Project, ProjectState},
 };
+
+/// Voting window bounds (seconds)
+const MIN_VOTING_WINDOW_SECS: i64 = 172_800; // 48 hours minimum
+const MAX_VOTING_WINDOW_SECS: i64 = 604_800; // 7 days maximum
 
 #[derive(Accounts)]
 pub struct SubmitMilestoneProof<'info> {
@@ -18,12 +22,20 @@ pub struct SubmitMilestoneProof<'info> {
         bump = project.bump,
     )]
     pub project: Account<'info, Project>,
+
+    #[account(
+        seeds = [ORG_SEED, project.creator.as_ref()],
+        bump = org.bump,
+    )]
+    pub org: Account<'info, OrgAccount>,
 }
 
 pub fn handler(
     ctx: Context<SubmitMilestoneProof>,
     milestone_index: u8,
     proof_uri: String,
+    invoice_hash: [u8; 32],
+    vendor_gstin_hash: [u8; 32],
     voting_window_secs: i64,
 ) -> Result<()> {
     let now = Clock::get()?.unix_timestamp;
@@ -49,6 +61,15 @@ pub fn handler(
         CredenceError::InvalidProofUri
     );
 
+    // Registered vendor path must use the org's GSTIN hash.
+    // Unregistered vendor path passes [0u8; 32].
+    if vendor_gstin_hash != [0u8; 32] {
+        require!(
+            vendor_gstin_hash == ctx.accounts.org.gstin_hash,
+            CredenceError::OrgGstinMismatch
+        );
+    }
+
     let milestone = &project.milestones[milestone_index as usize];
 
     // Allow resubmission if Rejected, first submission if Pending
@@ -62,21 +83,25 @@ pub fn handler(
         CredenceError::MaxResubmissionsReached
     );
 
-    let window = if voting_window_secs > 0 { voting_window_secs } else { 86_400 };
+    // Clamp voting window to [48h, 7d]
+    let window = voting_window_secs
+        .max(MIN_VOTING_WINDOW_SECS)
+        .min(MAX_VOTING_WINDOW_SECS);
 
     // Snapshot raised for stake-weighted voting
     let total_eligible = project.raised;
 
     let m = &mut project.milestones[milestone_index as usize];
-    m.proof_uri = proof_uri;
-    m.state = MilestoneState::UnderReview;
+    m.proof_uri      = proof_uri;
+    m.invoice_hash   = invoice_hash;
+    m.state          = MilestoneState::UnderReview;
     m.total_eligible = total_eligible;
-    m.voting_start = now;
-    m.voting_end = now
+    m.voting_start   = now;
+    m.voting_end     = now
         .checked_add(window)
         .ok_or(CredenceError::ArithmeticOverflow)?;
-    m.vote_yes = 0;
-    m.vote_no = 0;
+    m.vote_yes       = 0;
+    m.vote_no        = 0;
 
     Ok(())
 }

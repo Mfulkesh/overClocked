@@ -52,6 +52,17 @@ export type OrgMinAggregateOutputType = {
   twitterHandle: string | null
   logoUrl: string | null
   onchainPda: string | null
+  onchainGstinHash: string | null
+  gstin: string | null
+  gstinVerified: boolean | null
+  gstinLegalName: string | null
+  gstinTradeName: string | null
+  gstinState: string | null
+  gstinStateCode: string | null
+  gstinStatus: string | null
+  gstinRegistrationDate: string | null
+  gstinVerifiedAt: Date | null
+  gstinLastCheckedAt: Date | null
   campaignsCreated: number | null
   campaignsCompleted: number | null
   campaignsFailed: number | null
@@ -71,6 +82,17 @@ export type OrgMaxAggregateOutputType = {
   twitterHandle: string | null
   logoUrl: string | null
   onchainPda: string | null
+  onchainGstinHash: string | null
+  gstin: string | null
+  gstinVerified: boolean | null
+  gstinLegalName: string | null
+  gstinTradeName: string | null
+  gstinState: string | null
+  gstinStateCode: string | null
+  gstinStatus: string | null
+  gstinRegistrationDate: string | null
+  gstinVerifiedAt: Date | null
+  gstinLastCheckedAt: Date | null
   campaignsCreated: number | null
   campaignsCompleted: number | null
   campaignsFailed: number | null
@@ -91,6 +113,17 @@ export type OrgCountAggregateOutputType = {
   logoUrl: number
   docUrls: number
   onchainPda: number
+  onchainGstinHash: number
+  gstin: number
+  gstinVerified: number
+  gstinLegalName: number
+  gstinTradeName: number
+  gstinState: number
+  gstinStateCode: number
+  gstinStatus: number
+  gstinRegistrationDate: number
+  gstinVerifiedAt: number
+  gstinLastCheckedAt: number
   campaignsCreated: number
   campaignsCompleted: number
   campaignsFailed: number
@@ -128,6 +161,17 @@ export type OrgMinAggregateInputType = {
   twitterHandle?: true
   logoUrl?: true
   onchainPda?: true
+  onchainGstinHash?: true
+  gstin?: true
+  gstinVerified?: true
+  gstinLegalName?: true
+  gstinTradeName?: true
+  gstinState?: true
+  gstinStateCode?: true
+  gstinStatus?: true
+  gstinRegistrationDate?: true
+  gstinVerifiedAt?: true
+  gstinLastCheckedAt?: true
   campaignsCreated?: true
   campaignsCompleted?: true
   campaignsFailed?: true
@@ -147,6 +191,17 @@ export type OrgMaxAggregateInputType = {
   twitterHandle?: true
   logoUrl?: true
   onchainPda?: true
+  onchainGstinHash?: true
+  gstin?: true
+  gstinVerified?: true
+  gstinLegalName?: true
+  gstinTradeName?: true
+  gstinState?: true
+  gstinStateCode?: true
+  gstinStatus?: true
+  gstinRegistrationDate?: true
+  gstinVerifiedAt?: true
+  gstinLastCheckedAt?: true
   campaignsCreated?: true
   campaignsCompleted?: true
   campaignsFailed?: true
@@ -167,6 +222,17 @@ export type OrgCountAggregateInputType = {
   logoUrl?: true
   docUrls?: true
   onchainPda?: true
+  onchainGstinHash?: true
+  gstin?: true
+  gstinVerified?: true
+  gstinLegalName?: true
+  gstinTradeName?: true
+  gstinState?: true
+  gstinStateCode?: true
+  gstinStatus?: true
+  gstinRegistrationDate?: true
+  gstinVerifiedAt?: true
+  gstinLastCheckedAt?: true
   campaignsCreated?: true
   campaignsCompleted?: true
   campaignsFailed?: true
@@ -274,6 +340,17 @@ export type OrgGroupByOutputType = {
   logoUrl: string | null
   docUrls: string[]
   onchainPda: string | null
+  onchainGstinHash: string | null
+  gstin: string | null
+  gstinVerified: boolean
+  gstinLegalName: string | null
+  gstinTradeName: string | null
+  gstinState: string | null
+  gstinStateCode: string | null
+  gstinStatus: string | null
+  gstinRegistrationDate: string | null
+  gstinVerifiedAt: Date | null
+  gstinLastCheckedAt: Date | null
   campaignsCreated: number
   campaignsCompleted: number
   campaignsFailed: number
@@ -317,6 +394,17 @@ export type OrgWhereInput = {
   logoUrl?: Prisma.StringNullableFilter<"Org"> | string | null
   docUrls?: Prisma.StringNullableListFilter<"Org">
   onchainPda?: Prisma.StringNullableFilter<"Org"> | string | null
+  onchainGstinHash?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstin?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinVerified?: Prisma.BoolFilter<"Org"> | boolean
+  gstinLegalName?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinTradeName?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinState?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinStateCode?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinStatus?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinRegistrationDate?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinVerifiedAt?: Prisma.DateTimeNullableFilter<"Org"> | Date | string | null
+  gstinLastCheckedAt?: Prisma.DateTimeNullableFilter<"Org"> | Date | string | null
   campaignsCreated?: Prisma.IntFilter<"Org"> | number
   campaignsCompleted?: Prisma.IntFilter<"Org"> | number
   campaignsFailed?: Prisma.IntFilter<"Org"> | number
@@ -339,6 +427,17 @@ export type OrgOrderByWithRelationInput = {
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   docUrls?: Prisma.SortOrder
   onchainPda?: Prisma.SortOrderInput | Prisma.SortOrder
+  onchainGstinHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstin?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinVerified?: Prisma.SortOrder
+  gstinLegalName?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinTradeName?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinState?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinStateCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinRegistrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinLastCheckedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   campaignsCreated?: Prisma.SortOrder
   campaignsCompleted?: Prisma.SortOrder
   campaignsFailed?: Prisma.SortOrder
@@ -354,6 +453,7 @@ export type OrgWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   userId?: string
   onchainPda?: string
+  gstin?: string
   AND?: Prisma.OrgWhereInput | Prisma.OrgWhereInput[]
   OR?: Prisma.OrgWhereInput[]
   NOT?: Prisma.OrgWhereInput | Prisma.OrgWhereInput[]
@@ -364,6 +464,16 @@ export type OrgWhereUniqueInput = Prisma.AtLeast<{
   twitterHandle?: Prisma.StringNullableFilter<"Org"> | string | null
   logoUrl?: Prisma.StringNullableFilter<"Org"> | string | null
   docUrls?: Prisma.StringNullableListFilter<"Org">
+  onchainGstinHash?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinVerified?: Prisma.BoolFilter<"Org"> | boolean
+  gstinLegalName?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinTradeName?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinState?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinStateCode?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinStatus?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinRegistrationDate?: Prisma.StringNullableFilter<"Org"> | string | null
+  gstinVerifiedAt?: Prisma.DateTimeNullableFilter<"Org"> | Date | string | null
+  gstinLastCheckedAt?: Prisma.DateTimeNullableFilter<"Org"> | Date | string | null
   campaignsCreated?: Prisma.IntFilter<"Org"> | number
   campaignsCompleted?: Prisma.IntFilter<"Org"> | number
   campaignsFailed?: Prisma.IntFilter<"Org"> | number
@@ -373,7 +483,7 @@ export type OrgWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Org"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   campaigns?: Prisma.CampaignListRelationFilter
-}, "id" | "userId" | "onchainPda">
+}, "id" | "userId" | "onchainPda" | "gstin">
 
 export type OrgOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -386,6 +496,17 @@ export type OrgOrderByWithAggregationInput = {
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   docUrls?: Prisma.SortOrder
   onchainPda?: Prisma.SortOrderInput | Prisma.SortOrder
+  onchainGstinHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstin?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinVerified?: Prisma.SortOrder
+  gstinLegalName?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinTradeName?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinState?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinStateCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinRegistrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  gstinLastCheckedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   campaignsCreated?: Prisma.SortOrder
   campaignsCompleted?: Prisma.SortOrder
   campaignsFailed?: Prisma.SortOrder
@@ -414,6 +535,17 @@ export type OrgScalarWhereWithAggregatesInput = {
   logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
   docUrls?: Prisma.StringNullableListFilter<"Org">
   onchainPda?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  onchainGstinHash?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  gstin?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  gstinVerified?: Prisma.BoolWithAggregatesFilter<"Org"> | boolean
+  gstinLegalName?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  gstinTradeName?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  gstinState?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  gstinStateCode?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  gstinStatus?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  gstinRegistrationDate?: Prisma.StringNullableWithAggregatesFilter<"Org"> | string | null
+  gstinVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Org"> | Date | string | null
+  gstinLastCheckedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Org"> | Date | string | null
   campaignsCreated?: Prisma.IntWithAggregatesFilter<"Org"> | number
   campaignsCompleted?: Prisma.IntWithAggregatesFilter<"Org"> | number
   campaignsFailed?: Prisma.IntWithAggregatesFilter<"Org"> | number
@@ -433,6 +565,17 @@ export type OrgCreateInput = {
   logoUrl?: string | null
   docUrls?: Prisma.OrgCreatedocUrlsInput | string[]
   onchainPda?: string | null
+  onchainGstinHash?: string | null
+  gstin?: string | null
+  gstinVerified?: boolean
+  gstinLegalName?: string | null
+  gstinTradeName?: string | null
+  gstinState?: string | null
+  gstinStateCode?: string | null
+  gstinStatus?: string | null
+  gstinRegistrationDate?: string | null
+  gstinVerifiedAt?: Date | string | null
+  gstinLastCheckedAt?: Date | string | null
   campaignsCreated?: number
   campaignsCompleted?: number
   campaignsFailed?: number
@@ -455,6 +598,17 @@ export type OrgUncheckedCreateInput = {
   logoUrl?: string | null
   docUrls?: Prisma.OrgCreatedocUrlsInput | string[]
   onchainPda?: string | null
+  onchainGstinHash?: string | null
+  gstin?: string | null
+  gstinVerified?: boolean
+  gstinLegalName?: string | null
+  gstinTradeName?: string | null
+  gstinState?: string | null
+  gstinStateCode?: string | null
+  gstinStatus?: string | null
+  gstinRegistrationDate?: string | null
+  gstinVerifiedAt?: Date | string | null
+  gstinLastCheckedAt?: Date | string | null
   campaignsCreated?: number
   campaignsCompleted?: number
   campaignsFailed?: number
@@ -475,6 +629,17 @@ export type OrgUpdateInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   docUrls?: Prisma.OrgUpdatedocUrlsInput | string[]
   onchainPda?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onchainGstinHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstinLegalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinTradeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gstinLastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaignsCreated?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsFailed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -497,6 +662,17 @@ export type OrgUncheckedUpdateInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   docUrls?: Prisma.OrgUpdatedocUrlsInput | string[]
   onchainPda?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onchainGstinHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstinLegalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinTradeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gstinLastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaignsCreated?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsFailed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -518,6 +694,17 @@ export type OrgCreateManyInput = {
   logoUrl?: string | null
   docUrls?: Prisma.OrgCreatedocUrlsInput | string[]
   onchainPda?: string | null
+  onchainGstinHash?: string | null
+  gstin?: string | null
+  gstinVerified?: boolean
+  gstinLegalName?: string | null
+  gstinTradeName?: string | null
+  gstinState?: string | null
+  gstinStateCode?: string | null
+  gstinStatus?: string | null
+  gstinRegistrationDate?: string | null
+  gstinVerifiedAt?: Date | string | null
+  gstinLastCheckedAt?: Date | string | null
   campaignsCreated?: number
   campaignsCompleted?: number
   campaignsFailed?: number
@@ -537,6 +724,17 @@ export type OrgUpdateManyMutationInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   docUrls?: Prisma.OrgUpdatedocUrlsInput | string[]
   onchainPda?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onchainGstinHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstinLegalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinTradeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gstinLastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaignsCreated?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsFailed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -557,6 +755,17 @@ export type OrgUncheckedUpdateManyInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   docUrls?: Prisma.OrgUpdatedocUrlsInput | string[]
   onchainPda?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onchainGstinHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstinLegalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinTradeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gstinLastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaignsCreated?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsFailed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -590,6 +799,17 @@ export type OrgCountOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   docUrls?: Prisma.SortOrder
   onchainPda?: Prisma.SortOrder
+  onchainGstinHash?: Prisma.SortOrder
+  gstin?: Prisma.SortOrder
+  gstinVerified?: Prisma.SortOrder
+  gstinLegalName?: Prisma.SortOrder
+  gstinTradeName?: Prisma.SortOrder
+  gstinState?: Prisma.SortOrder
+  gstinStateCode?: Prisma.SortOrder
+  gstinStatus?: Prisma.SortOrder
+  gstinRegistrationDate?: Prisma.SortOrder
+  gstinVerifiedAt?: Prisma.SortOrder
+  gstinLastCheckedAt?: Prisma.SortOrder
   campaignsCreated?: Prisma.SortOrder
   campaignsCompleted?: Prisma.SortOrder
   campaignsFailed?: Prisma.SortOrder
@@ -617,6 +837,17 @@ export type OrgMaxOrderByAggregateInput = {
   twitterHandle?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   onchainPda?: Prisma.SortOrder
+  onchainGstinHash?: Prisma.SortOrder
+  gstin?: Prisma.SortOrder
+  gstinVerified?: Prisma.SortOrder
+  gstinLegalName?: Prisma.SortOrder
+  gstinTradeName?: Prisma.SortOrder
+  gstinState?: Prisma.SortOrder
+  gstinStateCode?: Prisma.SortOrder
+  gstinStatus?: Prisma.SortOrder
+  gstinRegistrationDate?: Prisma.SortOrder
+  gstinVerifiedAt?: Prisma.SortOrder
+  gstinLastCheckedAt?: Prisma.SortOrder
   campaignsCreated?: Prisma.SortOrder
   campaignsCompleted?: Prisma.SortOrder
   campaignsFailed?: Prisma.SortOrder
@@ -636,6 +867,17 @@ export type OrgMinOrderByAggregateInput = {
   twitterHandle?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   onchainPda?: Prisma.SortOrder
+  onchainGstinHash?: Prisma.SortOrder
+  gstin?: Prisma.SortOrder
+  gstinVerified?: Prisma.SortOrder
+  gstinLegalName?: Prisma.SortOrder
+  gstinTradeName?: Prisma.SortOrder
+  gstinState?: Prisma.SortOrder
+  gstinStateCode?: Prisma.SortOrder
+  gstinStatus?: Prisma.SortOrder
+  gstinRegistrationDate?: Prisma.SortOrder
+  gstinVerifiedAt?: Prisma.SortOrder
+  gstinLastCheckedAt?: Prisma.SortOrder
   campaignsCreated?: Prisma.SortOrder
   campaignsCompleted?: Prisma.SortOrder
   campaignsFailed?: Prisma.SortOrder
@@ -703,6 +945,14 @@ export type OrgUpdatedocUrlsInput = {
   push?: string | string[]
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -717,10 +967,6 @@ export type BigIntFieldUpdateOperationsInput = {
   decrement?: bigint | number
   multiply?: bigint | number
   divide?: bigint | number
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
 }
 
 export type OrgCreateNestedOneWithoutCampaignsInput = {
@@ -747,6 +993,17 @@ export type OrgCreateWithoutUserInput = {
   logoUrl?: string | null
   docUrls?: Prisma.OrgCreatedocUrlsInput | string[]
   onchainPda?: string | null
+  onchainGstinHash?: string | null
+  gstin?: string | null
+  gstinVerified?: boolean
+  gstinLegalName?: string | null
+  gstinTradeName?: string | null
+  gstinState?: string | null
+  gstinStateCode?: string | null
+  gstinStatus?: string | null
+  gstinRegistrationDate?: string | null
+  gstinVerifiedAt?: Date | string | null
+  gstinLastCheckedAt?: Date | string | null
   campaignsCreated?: number
   campaignsCompleted?: number
   campaignsFailed?: number
@@ -767,6 +1024,17 @@ export type OrgUncheckedCreateWithoutUserInput = {
   logoUrl?: string | null
   docUrls?: Prisma.OrgCreatedocUrlsInput | string[]
   onchainPda?: string | null
+  onchainGstinHash?: string | null
+  gstin?: string | null
+  gstinVerified?: boolean
+  gstinLegalName?: string | null
+  gstinTradeName?: string | null
+  gstinState?: string | null
+  gstinStateCode?: string | null
+  gstinStatus?: string | null
+  gstinRegistrationDate?: string | null
+  gstinVerifiedAt?: Date | string | null
+  gstinLastCheckedAt?: Date | string | null
   campaignsCreated?: number
   campaignsCompleted?: number
   campaignsFailed?: number
@@ -803,6 +1071,17 @@ export type OrgUpdateWithoutUserInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   docUrls?: Prisma.OrgUpdatedocUrlsInput | string[]
   onchainPda?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onchainGstinHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstinLegalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinTradeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gstinLastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaignsCreated?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsFailed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -823,6 +1102,17 @@ export type OrgUncheckedUpdateWithoutUserInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   docUrls?: Prisma.OrgUpdatedocUrlsInput | string[]
   onchainPda?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onchainGstinHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstinLegalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinTradeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gstinLastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaignsCreated?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsFailed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -843,6 +1133,17 @@ export type OrgCreateWithoutCampaignsInput = {
   logoUrl?: string | null
   docUrls?: Prisma.OrgCreatedocUrlsInput | string[]
   onchainPda?: string | null
+  onchainGstinHash?: string | null
+  gstin?: string | null
+  gstinVerified?: boolean
+  gstinLegalName?: string | null
+  gstinTradeName?: string | null
+  gstinState?: string | null
+  gstinStateCode?: string | null
+  gstinStatus?: string | null
+  gstinRegistrationDate?: string | null
+  gstinVerifiedAt?: Date | string | null
+  gstinLastCheckedAt?: Date | string | null
   campaignsCreated?: number
   campaignsCompleted?: number
   campaignsFailed?: number
@@ -864,6 +1165,17 @@ export type OrgUncheckedCreateWithoutCampaignsInput = {
   logoUrl?: string | null
   docUrls?: Prisma.OrgCreatedocUrlsInput | string[]
   onchainPda?: string | null
+  onchainGstinHash?: string | null
+  gstin?: string | null
+  gstinVerified?: boolean
+  gstinLegalName?: string | null
+  gstinTradeName?: string | null
+  gstinState?: string | null
+  gstinStateCode?: string | null
+  gstinStatus?: string | null
+  gstinRegistrationDate?: string | null
+  gstinVerifiedAt?: Date | string | null
+  gstinLastCheckedAt?: Date | string | null
   campaignsCreated?: number
   campaignsCompleted?: number
   campaignsFailed?: number
@@ -899,6 +1211,17 @@ export type OrgUpdateWithoutCampaignsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   docUrls?: Prisma.OrgUpdatedocUrlsInput | string[]
   onchainPda?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onchainGstinHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstinLegalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinTradeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gstinLastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaignsCreated?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsFailed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -920,6 +1243,17 @@ export type OrgUncheckedUpdateWithoutCampaignsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   docUrls?: Prisma.OrgUpdatedocUrlsInput | string[]
   onchainPda?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onchainGstinHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstinLegalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinTradeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinRegistrationDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstinVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gstinLastCheckedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   campaignsCreated?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   campaignsFailed?: Prisma.IntFieldUpdateOperationsInput | number
@@ -971,6 +1305,17 @@ export type OrgSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   logoUrl?: boolean
   docUrls?: boolean
   onchainPda?: boolean
+  onchainGstinHash?: boolean
+  gstin?: boolean
+  gstinVerified?: boolean
+  gstinLegalName?: boolean
+  gstinTradeName?: boolean
+  gstinState?: boolean
+  gstinStateCode?: boolean
+  gstinStatus?: boolean
+  gstinRegistrationDate?: boolean
+  gstinVerifiedAt?: boolean
+  gstinLastCheckedAt?: boolean
   campaignsCreated?: boolean
   campaignsCompleted?: boolean
   campaignsFailed?: boolean
@@ -994,6 +1339,17 @@ export type OrgSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   logoUrl?: boolean
   docUrls?: boolean
   onchainPda?: boolean
+  onchainGstinHash?: boolean
+  gstin?: boolean
+  gstinVerified?: boolean
+  gstinLegalName?: boolean
+  gstinTradeName?: boolean
+  gstinState?: boolean
+  gstinStateCode?: boolean
+  gstinStatus?: boolean
+  gstinRegistrationDate?: boolean
+  gstinVerifiedAt?: boolean
+  gstinLastCheckedAt?: boolean
   campaignsCreated?: boolean
   campaignsCompleted?: boolean
   campaignsFailed?: boolean
@@ -1015,6 +1371,17 @@ export type OrgSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   logoUrl?: boolean
   docUrls?: boolean
   onchainPda?: boolean
+  onchainGstinHash?: boolean
+  gstin?: boolean
+  gstinVerified?: boolean
+  gstinLegalName?: boolean
+  gstinTradeName?: boolean
+  gstinState?: boolean
+  gstinStateCode?: boolean
+  gstinStatus?: boolean
+  gstinRegistrationDate?: boolean
+  gstinVerifiedAt?: boolean
+  gstinLastCheckedAt?: boolean
   campaignsCreated?: boolean
   campaignsCompleted?: boolean
   campaignsFailed?: boolean
@@ -1036,6 +1403,17 @@ export type OrgSelectScalar = {
   logoUrl?: boolean
   docUrls?: boolean
   onchainPda?: boolean
+  onchainGstinHash?: boolean
+  gstin?: boolean
+  gstinVerified?: boolean
+  gstinLegalName?: boolean
+  gstinTradeName?: boolean
+  gstinState?: boolean
+  gstinStateCode?: boolean
+  gstinStatus?: boolean
+  gstinRegistrationDate?: boolean
+  gstinVerifiedAt?: boolean
+  gstinLastCheckedAt?: boolean
   campaignsCreated?: boolean
   campaignsCompleted?: boolean
   campaignsFailed?: boolean
@@ -1045,7 +1423,7 @@ export type OrgSelectScalar = {
   createdAt?: boolean
 }
 
-export type OrgOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "description" | "category" | "websiteUrl" | "twitterHandle" | "logoUrl" | "docUrls" | "onchainPda" | "campaignsCreated" | "campaignsCompleted" | "campaignsFailed" | "totalRaisedLamports" | "completionRateBps" | "verified" | "createdAt", ExtArgs["result"]["org"]>
+export type OrgOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "description" | "category" | "websiteUrl" | "twitterHandle" | "logoUrl" | "docUrls" | "onchainPda" | "onchainGstinHash" | "gstin" | "gstinVerified" | "gstinLegalName" | "gstinTradeName" | "gstinState" | "gstinStateCode" | "gstinStatus" | "gstinRegistrationDate" | "gstinVerifiedAt" | "gstinLastCheckedAt" | "campaignsCreated" | "campaignsCompleted" | "campaignsFailed" | "totalRaisedLamports" | "completionRateBps" | "verified" | "createdAt", ExtArgs["result"]["org"]>
 export type OrgInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   campaigns?: boolean | Prisma.Org$campaignsArgs<ExtArgs>
@@ -1075,6 +1453,17 @@ export type $OrgPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     logoUrl: string | null
     docUrls: string[]
     onchainPda: string | null
+    onchainGstinHash: string | null
+    gstin: string | null
+    gstinVerified: boolean
+    gstinLegalName: string | null
+    gstinTradeName: string | null
+    gstinState: string | null
+    gstinStateCode: string | null
+    gstinStatus: string | null
+    gstinRegistrationDate: string | null
+    gstinVerifiedAt: Date | null
+    gstinLastCheckedAt: Date | null
     campaignsCreated: number
     campaignsCompleted: number
     campaignsFailed: number
@@ -1517,6 +1906,17 @@ export interface OrgFieldRefs {
   readonly logoUrl: Prisma.FieldRef<"Org", 'String'>
   readonly docUrls: Prisma.FieldRef<"Org", 'String[]'>
   readonly onchainPda: Prisma.FieldRef<"Org", 'String'>
+  readonly onchainGstinHash: Prisma.FieldRef<"Org", 'String'>
+  readonly gstin: Prisma.FieldRef<"Org", 'String'>
+  readonly gstinVerified: Prisma.FieldRef<"Org", 'Boolean'>
+  readonly gstinLegalName: Prisma.FieldRef<"Org", 'String'>
+  readonly gstinTradeName: Prisma.FieldRef<"Org", 'String'>
+  readonly gstinState: Prisma.FieldRef<"Org", 'String'>
+  readonly gstinStateCode: Prisma.FieldRef<"Org", 'String'>
+  readonly gstinStatus: Prisma.FieldRef<"Org", 'String'>
+  readonly gstinRegistrationDate: Prisma.FieldRef<"Org", 'String'>
+  readonly gstinVerifiedAt: Prisma.FieldRef<"Org", 'DateTime'>
+  readonly gstinLastCheckedAt: Prisma.FieldRef<"Org", 'DateTime'>
   readonly campaignsCreated: Prisma.FieldRef<"Org", 'Int'>
   readonly campaignsCompleted: Prisma.FieldRef<"Org", 'Int'>
   readonly campaignsFailed: Prisma.FieldRef<"Org", 'Int'>

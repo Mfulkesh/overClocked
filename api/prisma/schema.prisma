@@ -13,7 +13,7 @@ datasource db {
 // ── User (Privy-linked) ─────────────────────────────────────────────────────
 model User {
   id            String   @id @default(uuid())
-  privyId       String   @unique @default("")// Privy DID
+  privyId       String   @unique @default("") // Privy DID
   walletAddress String?  @unique // Embedded or external wallet
   email         String?  @unique
   twitterHandle String?
@@ -42,6 +42,20 @@ model Org {
 
   // On-chain PDA address for this org
   onchainPda String? @unique
+  // SHA-256(gstin uppercase) used in on-chain checks.
+  onchainGstinHash String?
+
+  // GST profile captured at org onboarding.
+  gstin                String? @unique
+  gstinVerified        Boolean @default(false)
+  gstinLegalName       String?
+  gstinTradeName       String?
+  gstinState           String?
+  gstinStateCode       String?
+  gstinStatus          String?
+  gstinRegistrationDate String?
+  gstinVerifiedAt      DateTime?
+  gstinLastCheckedAt   DateTime?
 
   // Reputation (mirrored from on-chain; updated by Helius webhook)
   campaignsCreated    Int    @default(0)
@@ -123,6 +137,9 @@ model Milestone {
   title       String
   description String?
 
+  // DPR Phase label — shown in UI as "Phase 1: Venue & Logistics"
+  dprPhaseLabel String? // optional human label for this milestone/DPR phase
+
   // Release config
   amountLamports BigInt @default(0)
   releasePctBps  Int    @default(0)
@@ -134,7 +151,7 @@ model Milestone {
   // Voting config
   thresholdBps     Int @default(5100)
   quorumBps        Int @default(1000)
-  // Voting window is set by creator at proof submission time (min 24h enforced by API)
+  // Voting window set by creator at proof submission. Min 48h (172800s), Max 7d (604800s)
   votingWindowSecs Int @default(172800) // 48h default
 
   deadline      DateTime?
@@ -143,6 +160,68 @@ model Milestone {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  proof   MilestoneProof?
+  updates MilestoneUpdate[]
+}
+
+// ── MilestoneProof (GST-verified spend evidence) ─────────────────────────────
+// Created when a creator submits proof for a milestone.
+// Stores a chain of verified invoices; prev_proof_hash links to the previous milestone's proof
+// forming a tamper-evident audit trail (like git commits for money).
+model MilestoneProof {
+  id          String    @id @default(uuid())
+  milestoneId String    @unique
+  milestone   Milestone @relation(fields: [milestoneId], references: [id])
+
+  // GST verification
+  gstin                String? // 15-char GSTIN of the vendor
+  gstinVerified        Boolean @default(false)
+  vendorLegalName      String? // returned by GST API, not entered by creator
+  vendorState          String? // state code from GST API
+  isUnregisteredVendor Boolean @default(false) // true for vendors below GST threshold
+
+  // Invoice details
+  invoiceNumber      String?
+  invoiceAmountPaise BigInt? // full invoice amount in paise (must be >= release amount)
+  invoiceS3Key       String? // S3 object key for the uploaded invoice PDF/image
+  invoiceHash        String // hex-encoded SHA-256 of the invoice file (for tamper detection)
+
+  // Proof-of-History chain
+  // Each proof hashes the previous proof's invoiceHash — creates an ordered chain
+  prevProofHash   String? // invoiceHash of the immediately preceding MilestoneProof, null for first
+  onchainProofUri String? // S3 JSON URI stored on Solana via submit_milestone_proof
+
+  submittedAt DateTime @default(now())
+}
+
+// ── MilestoneUpdate (DPR Progress Timeline) ───────────────────────────────────
+// Creator posts updates any time during a milestone — like git commits.
+// Visible to donors as a live activity feed showing "what we did, when".
+model MilestoneUpdate {
+  id          String    @id @default(uuid())
+  milestoneId String
+  milestone   Milestone @relation(fields: [milestoneId], references: [id])
+
+  type        MilestoneUpdateType @default(PROGRESS)
+  title       String
+  description String?
+  mediaUrls   String[] // S3 keys for photos, videos, docs
+
+  // Creator signs a hash of this update to prove authenticity
+  creatorWallet String?
+  contentHash   String? // SHA-256 of title+description — stored for tamper detection
+
+  postedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+}
+
+enum MilestoneUpdateType {
+  PROGRESS // General update ("We booked the venue")
+  EXPENSE // Money spent ("Paid ₹20,000 to AV vendor") — should link to proof
+  PHOTO // Visual update ("Site visit photos")
+  ANNOUNCEMENT // Important announcement ("Event date changed")
+  COMPLETION // Marks end of milestone work before formal proof submission
 }
 
 enum MilestoneState {

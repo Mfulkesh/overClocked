@@ -4,6 +4,7 @@ import { orgsRouter } from "./routes/orgs.js";
 import { campaignsRouter } from "./routes/campaigns.js";
 import { donationsRouter } from "./routes/donations.js";
 import { webhookRouter } from "./routes/webhook.js";
+import { milestonesRouter } from "./routes/milestones.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/api/orgs", orgsRouter);
 app.use("/api/campaigns", campaignsRouter);
 app.use("/api/donations", donationsRouter);
 app.use("/api/webhook", webhookRouter);
+app.use("/api/milestones", milestonesRouter);
 
 app.use((req, res) => {
     res.status(404).json({ error: `Route not found: ${req.method} ${req.path}` });

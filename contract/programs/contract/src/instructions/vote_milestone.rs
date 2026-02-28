@@ -42,14 +42,7 @@ pub fn handler(
         CredenceError::MilestoneIndexOutOfRange
     );
 
-    // Check not already voted using bitmap
-    let bit = 1u64 << milestone_index;
-    require!(
-        ctx.accounts.donor_record.voted_bitmap & bit == 0,
-        CredenceError::AlreadyVoted
-    );
-
-    {
+    let (bit, vote_weight) = {
         let milestone = &ctx.accounts.project.milestones[milestone_index as usize];
         require!(
             milestone.state == MilestoneState::UnderReview,
@@ -57,9 +50,25 @@ pub fn handler(
         );
         require!(now >= milestone.voting_start, CredenceError::VotingNotOpen);
         require!(now <= milestone.voting_end, CredenceError::VotingWindowNotExpired);
-    }
 
-    let vote_weight = ctx.accounts.donor_record.amount_lamports;
+        // Bitmap key is milestone index + revision offset, so a donor may vote again
+        // on a resubmitted milestone but not twice in the same review round.
+        let bit_index = (milestone_index as u64)
+            .checked_add(
+                (milestone.revision_count as u64)
+                    .checked_mul(MAX_MILESTONES as u64)
+                    .ok_or(CredenceError::ArithmeticOverflow)?,
+            )
+            .ok_or(CredenceError::ArithmeticOverflow)?;
+        require!(bit_index < 64, CredenceError::ArithmeticOverflow);
+        (1u64 << bit_index, ctx.accounts.donor_record.amount_lamports)
+    };
+
+    // Check not already voted for this milestone revision
+    require!(
+        ctx.accounts.donor_record.voted_bitmap & bit == 0,
+        CredenceError::AlreadyVoted
+    );
 
     // Apply vote
     let m = &mut ctx.accounts.project.milestones[milestone_index as usize];

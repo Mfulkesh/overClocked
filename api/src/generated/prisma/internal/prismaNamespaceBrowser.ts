@@ -55,6 +55,8 @@ export const ModelName = {
   Org: 'Org',
   Campaign: 'Campaign',
   Milestone: 'Milestone',
+  MilestoneProof: 'MilestoneProof',
+  MilestoneUpdate: 'MilestoneUpdate',
   Donation: 'Donation',
   YieldAccrual: 'YieldAccrual'
 } as const
@@ -98,6 +100,17 @@ export const OrgScalarFieldEnum = {
   logoUrl: 'logoUrl',
   docUrls: 'docUrls',
   onchainPda: 'onchainPda',
+  onchainGstinHash: 'onchainGstinHash',
+  gstin: 'gstin',
+  gstinVerified: 'gstinVerified',
+  gstinLegalName: 'gstinLegalName',
+  gstinTradeName: 'gstinTradeName',
+  gstinState: 'gstinState',
+  gstinStateCode: 'gstinStateCode',
+  gstinStatus: 'gstinStatus',
+  gstinRegistrationDate: 'gstinRegistrationDate',
+  gstinVerifiedAt: 'gstinVerifiedAt',
+  gstinLastCheckedAt: 'gstinLastCheckedAt',
   campaignsCreated: 'campaignsCreated',
   campaignsCompleted: 'campaignsCompleted',
   campaignsFailed: 'campaignsFailed',
@@ -143,6 +156,7 @@ export const MilestoneScalarFieldEnum = {
   index: 'index',
   title: 'title',
   description: 'description',
+  dprPhaseLabel: 'dprPhaseLabel',
   amountLamports: 'amountLamports',
   releasePctBps: 'releasePctBps',
   proofUri: 'proofUri',
@@ -158,6 +172,42 @@ export const MilestoneScalarFieldEnum = {
 } as const
 
 export type MilestoneScalarFieldEnum = (typeof MilestoneScalarFieldEnum)[keyof typeof MilestoneScalarFieldEnum]
+
+
+export const MilestoneProofScalarFieldEnum = {
+  id: 'id',
+  milestoneId: 'milestoneId',
+  gstin: 'gstin',
+  gstinVerified: 'gstinVerified',
+  vendorLegalName: 'vendorLegalName',
+  vendorState: 'vendorState',
+  isUnregisteredVendor: 'isUnregisteredVendor',
+  invoiceNumber: 'invoiceNumber',
+  invoiceAmountPaise: 'invoiceAmountPaise',
+  invoiceS3Key: 'invoiceS3Key',
+  invoiceHash: 'invoiceHash',
+  prevProofHash: 'prevProofHash',
+  onchainProofUri: 'onchainProofUri',
+  submittedAt: 'submittedAt'
+} as const
+
+export type MilestoneProofScalarFieldEnum = (typeof MilestoneProofScalarFieldEnum)[keyof typeof MilestoneProofScalarFieldEnum]
+
+
+export const MilestoneUpdateScalarFieldEnum = {
+  id: 'id',
+  milestoneId: 'milestoneId',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  mediaUrls: 'mediaUrls',
+  creatorWallet: 'creatorWallet',
+  contentHash: 'contentHash',
+  postedAt: 'postedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type MilestoneUpdateScalarFieldEnum = (typeof MilestoneUpdateScalarFieldEnum)[keyof typeof MilestoneUpdateScalarFieldEnum]
 
 
 export const DonationScalarFieldEnum = {

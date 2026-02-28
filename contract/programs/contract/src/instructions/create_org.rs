@@ -18,9 +18,11 @@ pub struct CreateOrg<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<CreateOrg>) -> Result<()> {
+pub fn handler(ctx: Context<CreateOrg>, gstin_hash: [u8; 32]) -> Result<()> {
+    require!(gstin_hash != [0u8; 32], crate::error::CredenceError::InvalidGstinHash);
     let org = &mut ctx.accounts.org;
     org.authority = ctx.accounts.authority.key();
+    org.gstin_hash = gstin_hash;
     org.campaigns_created = 0;
     org.campaigns_completed = 0;
     org.campaigns_failed = 0;
